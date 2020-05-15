@@ -1,0 +1,70 @@
+.app-notification-floating {
+	position: absolute;
+	bottom: 50px;
+	right: 20px;
+	width: auto;
+}
+
+.app-notification-floating .app-notification-content .fas {
+	position: relative;
+	top: 0px;
+}
+
+.app-alert-info {
+	background-color: rgba(69, 138, 62, 0.8);
+	color: white;
+}
+
+.app-alert-danger {
+	background-color: rgba(225, 12, 57, 0.65);
+	color: white;
+}
+
+.app-alert-notification {
+	background-color: var(--app-background-darker);
+	color: white;
+}
+
+.app-notification-content {
+	margin: 0 !important;
+	text-align: center;
+}
+
+.app-notification-content span {
+
+}
+
+.app-notification-content .fas {
+	margin-right: 5px;
+}
+
+.app-notification-content ._subtitle {
+	padding-top: 5px;
+	border-top: solid 1px rgba(255, 255, 255, 0.65);
+	margin-top: 5px;
+	text-align: left;
+}
+
+.app-alert-box {
+	border-radius: 18px;
+	margin-top: 10px;
+	padding-top: 8px;
+	padding-bottom: 9px;
+	padding-left: 15px;
+	padding-right: 15px;
+	width: 100%;
+	transition: all 0.2s;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.app-notifications-group-enter, .app-notifications-group-leave-to {
+	opacity: 0;
+}
+
+.app-form-notification .app-alert-box {
+	border-radius: 8px !important;
+	padding-top: 4px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+}

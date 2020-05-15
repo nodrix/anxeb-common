@@ -1,0 +1,42 @@
+.app-exception-container {
+	color: #666688;
+	margin: 0 auto;
+	padding-top: 36vh!important;
+	text-align: center;
+	font-size: 1em;
+	display: table;
+	height: 100%;
+}
+
+.app-exception-container .code {
+	font-weight: 400;
+	font-size: 2.2em;
+	text-align: right;
+	border-right:solid 1px #c0c0c0;
+	display: table-cell;
+	height: 100%;
+	vertical-align: middle;
+	padding-right: 10px;
+	padding-top: 1px;
+	opacity: 0.8;
+}
+
+.app-exception-container .message {
+	margin: 0;
+	display: inline-block;
+	text-align: left;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+
+.app-exception-container .message div {
+	padding-left: 10px;
+	margin: 0;
+}
+
+.app-exception-container a {
+	font-size: 0.8em;
+	background-color: transparent!important;
+	border: none!important;
+	margin-left: 11px!important;
+}

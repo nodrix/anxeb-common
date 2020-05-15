@@ -1,0 +1,325 @@
+'use strict';
+
+const anxeb = require('anxeb-node');
+const moment = anxeb.utils.moment;
+const puppeteer = require('puppeteer');
+const Barcode = require('jsbarcode');
+const { createCanvas } = require("canvas");
+
+const $isNull = function (value) {
+	if (value != null && typeof value === 'object') {
+		if (value.hasOwnProperty('name') &&
+			value.hasOwnProperty('hash') &&
+			value.hasOwnProperty('data')) {
+			return true;
+		}
+	}
+	return value == null;
+};
+
+const $default = function (value, def) {
+	if (value != null) {
+		if ($isNull(value)) {
+			return def;
+		}
+		return value;
+	}
+	return def;
+};
+
+module.exports = function (context, params) {
+	let _self = this;
+	let _context = context;
+	let _module = params.module;
+
+	let _helpers = {
+		divide  : function (context, params, data) {
+			return function (a, b) {
+				return anxeb.utils.money.normalize(a / b);
+			}
+		},
+		now     : function (context, params, data) {
+			return function () {
+				return moment();
+			}
+		},
+		bool    : function (context, params, data) {
+			return function (value, ifTrue, ifFalse) {
+				if (value === true) {
+					return ifTrue;
+				} else {
+					if ($isNull(ifFalse)) {
+						return null;
+					} else {
+						return ifFalse;
+					}
+				}
+			}
+		},
+		if      : function (context, params, data) {
+			return function () {
+				let values = Array.prototype.slice.call(arguments);
+				let opts = arguments[values.length - 1];
+				let value = arguments[0];
+
+				for (let i = 1; i < values.length - 1; i++) {
+					if (value == values[i]) {
+						return opts.fn(this);
+					}
+				}
+				return opts.inverse(this);
+			}
+		},
+		greater : function (context, params, data) {
+			return function (value, comp, opts) {
+				if (value > comp) {
+					return opts.fn(this);
+				}
+				return opts.inverse(this);
+			}
+		},
+		integer : function (context, params, data) {
+			return function (value, comma) {
+				let thousandComma = $isNull(comma) ? true : comma;
+				if (value == null) {
+					value = 0;
+				}
+				value = parseFloat(value).toFixed(2);
+
+				let pind = value.indexOf('.');
+				if (pind > -1) {
+					value = value.substring(0, pind);
+				}
+
+				if (thousandComma === true) {
+					value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+				}
+
+				return value
+			}
+		},
+		number  : function (context, params, data) {
+			return function (value, decimals, comma) {
+				let decimalCount = $isNull(decimals) ? 2 : decimals;
+				let thousandComma = $isNull(comma) ? true : comma;
+
+				if (value == null) {
+					value = 0;
+				}
+
+				value = parseFloat(value).toFixed(decimalCount);
+
+				if (thousandComma === true) {
+					value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+				}
+
+				return value
+			}
+		},
+		date    : function (context, params, data) {
+			return function (value, option) {
+				if ($isNull(value)) {
+					return null;
+				}
+				option = $default(option, 'normal');
+
+				let _formats = {
+					normal : "DD/MM/YYYY",
+					text   : "DD MMMM [del] YYYY",
+					long   : "DD/MM/YYYY hh:mm a",
+					time   : "h:mm a"
+				};
+
+				let date = null;
+
+				if (typeof value === 'number') {
+					date = moment.unix(value);
+				} else {
+					date = moment(value);
+				}
+
+				let format = _formats[option] || option;
+
+
+				if (option === 'month-number') {
+					return (date.month() + 1);
+				} else if (option === 'month-index') {
+					return date.month();
+				} else if (option === 'month-name') {
+					return date.format('MMMM');
+				} else if (date[option] != null && typeof date[option] === 'function') {
+					return date[option]();
+				}
+
+				return date.format(format);
+			}
+		},
+		pick    : function (context, params, data) {
+			return function () {
+				let values = Array.prototype.slice.call(arguments, 0, -1);
+				for (let i = 0; i < values.length; i++) {
+					let value = values[i];
+
+					if (value != null) {
+						return value;
+					}
+				}
+				return null;
+			};
+		},
+		sum     : function (context, params, data) {
+			return function () {
+				let values = Array.prototype.slice.call(arguments, 0, -1);
+				let total = 0;
+				for (let i = 0; i < values.length; i++) {
+					let value = values[i];
+					if (value instanceof Array) {
+						total += value.reduce((a, b) => a + b, 0);
+					} else {
+						total += anxeb.utils.money.normalize(value);
+					}
+				}
+				return total;
+			};
+		},
+		percent : function (context, params, data) {
+			return function (dividend, divisor) {
+				return anxeb.utils.money.normalize((dividend / divisor) * 100);
+			};
+		},
+		mult    : function (context, params, data) {
+			return function (value, mult) {
+				return anxeb.utils.money.normalize(value * mult);
+			};
+		},
+		array   : function (context, params, data) {
+			return function () {
+				return Array.prototype.slice.call(arguments, 0, -1);
+			};
+		},
+		map     : function (context, params, data) {
+			return function () {
+				let args = Array.prototype.slice.call(arguments);
+				let list = args[0];
+
+				let result = [];
+				for (let i = 0; i < list.length; i++) {
+					let obj = list[i];
+					for (let a = 1; a < args.length - 1; a++) {
+						obj = obj[args[a]];
+					}
+					result.push(obj);
+				}
+
+				return result;
+			}
+		},
+		caption : function (context, params, data) {
+			return function (key, values, defaultValue) {
+				let keys = {};
+				for (let i = 0; i < values.length; i++) {
+					let parts = values[i].split(':');
+					keys[parts[0]] = parts[1];
+				}
+				return keys[key] || defaultValue;
+			};
+		},
+		barcode : function (context, params, data) {
+			return function (code, width, height, font, margin, showValue) {
+
+				let canvas = new createCanvas();
+				Barcode(canvas, code, {
+					height       : $default(height, 100),
+					fontSize     : $default(font, 62),
+					margin       : $default(margin, 4),
+					width        : $default(width, 9),
+					displayValue : $default(showValue, false)
+				});
+				return canvas.toDataURL('image/png');
+			};
+		},
+		file    : function (context, params, data) {
+			return function (path, id, name) {
+				let filePath = anxeb.utils.path.join(path, id, name != null && typeof name === 'string' ? name : 'logo.image');
+				if (context.service.storage.exists(filePath)) {
+					return context.service.storage.read(filePath);
+				} else {
+					return ''
+				}
+			};
+		},
+		static  : function (context, params, data) {
+			return function (path) {
+				return context.service.socket.uri + path;
+			};
+		}
+	};
+
+	_self.build = async function (params) {
+		let apiUri = context.service.socket.uri + anxeb.utils.url.normalize(params.api);
+		let templatePath = anxeb.utils.path.join('modules', _module, 'templates', 'reports', params.hbs);
+
+		let data = await _context.socket.do.get({
+			uri     : apiUri,
+			json    : true,
+			headers : {
+				Authorization : 'Bearer ' + _context.bearer.token
+			}
+		});
+
+		let name = data[params.key_field || 'id'];
+		let fileGroup = params.group || 'misc';
+
+		let reportFilePath = _context.service.locate.storage('modules', _module, 'reports', fileGroup, name + '.pdf');
+		let helpers = {};
+
+		if (params.helpers == null) {
+			params.helpers = [];
+			for (let key in _helpers) {
+				params.helpers.push(key);
+			}
+		}
+
+		for (let i = 0; i < params.helpers.length; i++) {
+			let key = params.helpers[i];
+			let func = _helpers[key];
+			if (func) {
+				helpers[key] = func(_context, params, data)
+			}
+		}
+
+		let html = await _context.service.renderer.compile(templatePath, { data : data }, {
+			helpers : helpers
+		});
+
+		let browser = await puppeteer.launch({ args : ['--no-sandbox'] });
+		let page = await browser.newPage();
+		await page.setContent(html);
+		await page.pdf({ path : reportFilePath, format : params.format || 'Letter', printBackground : true });
+		await browser.close();
+
+		return {
+			name  : name,
+			group : fileGroup,
+			size  : anxeb.utils.file.stats(reportFilePath).size
+		}
+	}
+
+	_self.send = async function (params) {
+		if (params.rebuild) {
+			let result = await _self.build(params);
+			params.name = result.name;
+		}
+
+		let fileName = params.name + '.pdf';
+		let reportFilePath = _context.service.locate.storage('modules', _module, 'reports', params.group || 'misc', fileName);
+
+		let attachmentName = encodeURIComponent(params.attachment ? (params.attachment + '.pdf') : fileName);
+
+		_context.file(reportFilePath, {
+			headers : params.download ? {
+				'Content-Disposition' : 'attachment;filename=' + attachmentName + '; filename*=UTF-8\'\'' + attachmentName
+			} : {}
+		});
+	}
+};

@@ -1,0 +1,51 @@
+{
+	"name": "anxeb-common",
+	"version": "0.0.1",
+	"description": "Anxeb frontend/backend middleware kit",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nodrix/anxeb-common.git"
+	},
+	"keywords": [
+		"Anxeb"
+	],
+	"author": "Eduardo Rosario <erosario@nodrix.com> (https://nodrix.com)",
+	"license": "MIT",
+	"homepage": "https://github.com/nodrix/anxeb-common#readme",
+	"dependencies": {
+		"@fortawesome/fontawesome-free": "^5.13.0",
+		"@openfonts/roboto_latin": "^1.44.1",
+		"bootstrap": "v4.0.0-alpha.6",
+		"chroma-js": "^2.1.0",
+		"fastclick": "^1.0.6",
+		"jquery": "^3.5.1",
+		"jsbarcode": "^3.11.0",
+		"moment": "^2.25.3",
+		"pace-js": "^1.0.2",
+		"screenfull": "^5.0.2",
+		"tether": "^1.4.7",
+		"underscore": "^1.10.2",
+		"v-calendar": "^1.0.6",
+		"vue": "^2.6.11",
+		"vuetify": "^2.2.28"
+	},
+	"scripts": {
+		"vendor:roboto": "mkdir -p static/vendors/font-roboto && cp -r node_modules/@openfonts/roboto_latin/* static/vendors/font-roboto",
+		"vendor:fontawesome": "mkdir -p static/vendors/fontawesome && cp -r node_modules/@fortawesome/fontawesome-free/* static/vendors/fontawesome",
+		"vendor:bootstrap": "mkdir -p static/vendors/bootstrap && cp -r node_modules/bootstrap/dist/* static/vendors/bootstrap",
+		"vendor:chroma": "mkdir -p static/vendors/chroma-js && cp -r node_modules/chroma-js/chroma.* static/vendors/chroma-js",
+		"vendor:fastclick": "mkdir -p static/vendors/fastclick && cp -r node_modules/fastclick/lib/fastclick.js static/vendors/fastclick",
+		"vendor:jquery": "mkdir -p static/vendors/jquery && cp -r node_modules/jquery/dist/* static/vendors/jquery",
+		"vendor:jsbarcode": "mkdir -p static/vendors/jsbarcode && cp -r node_modules/jsbarcode/dist/* static/vendors/jsbarcode",
+		"vendor:moment": "mkdir -p static/vendors/moment && cp -r node_modules/moment/min/* static/vendors/moment",
+		"vendor:pace": "mkdir -p static/vendors/pace-js && cp -r node_modules/pace-js/pace.* static/vendors/pace-js",
+		"vendor:screenfull": "mkdir -p static/vendors/screenfull && cp -r node_modules/screenfull/dist/* static/vendors/screenfull",
+		"vendor:tether": "mkdir -p static/vendors/tether && cp -r node_modules/tether/dist/* static/vendors/tether",
+		"vendor:underscore": "mkdir -p static/vendors/underscore && cp -r node_modules/underscore/underscore* static/vendors/underscore",
+		"vendor:vcalendar": "mkdir -p static/vendors/v-calendar && cp -r node_modules/v-calendar/lib/* static/vendors/v-calendar",
+		"vendor:vuetify": "mkdir -p static/vendors/vuetify && cp -r node_modules/vuetify/dist/* static/vendors/vuetify",
+		"vendors": "npm run vendor:fontawesome && npm run vendor:bootstrap && npm run vendor:chroma && npm run vendor:fastclick && npm run vendor:jquery && npm run vendor:jsbarcode && npm run vendor:moment && npm run vendor:pace && npm run vendor:screenfull && npm run vendor:tether && npm run vendor:underscore && npm run vendor:vcalendar && npm run vendor:vuetify && npm run vendor:roboto",
+		"install": "npm run vendors"
+	}
+}

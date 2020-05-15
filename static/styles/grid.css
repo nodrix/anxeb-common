@@ -1,0 +1,370 @@
+.app-grid {
+}
+
+.app-grid ._table {
+	overflow-x: auto;
+	width: 100%;
+}
+
+.app-grid .app-grid-table {
+	width: 100%;
+}
+
+.app-grid .app-grid-table .app-grid-selectable:hover {
+	background-color: rgba(0, 0, 0, 0.1) !important;
+	cursor: pointer !important;
+}
+
+.app-grid .app-grid-table .app-grid-hover:hover {
+	background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.app-grid .app-grid-table tr:hover td {
+
+}
+
+.app-grid .app-grid-table tr:first-child {
+	color: var(--app-background-darker);
+	background-color: transparent !important;
+	border-bottom: solid 1px var(--app-background-color);
+}
+
+.app-grid .app-grid-table tr:first-child th {
+	padding-bottom: 4px !important;
+	padding-top: 4px !important;
+}
+
+.app-grid .app-grid-table tr:nth-child(even) {
+	background-color: rgba(40, 40, 40, 0.05);
+}
+
+.app-grid .app-grid-table tr th {
+	padding-right: 10px !important;
+	padding-left: 10px !important;
+}
+
+.app-grid .app-grid-table tr th span {
+	cursor: pointer;
+	user-select: none;
+}
+
+.app-grid .app-grid-table tr td {
+	color: #333333;
+	border: none !important;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-top: 4px !important;
+	padding-bottom: 4px !important;
+}
+
+.app-grid-paging {
+
+}
+
+.app-grid-paging .app-grid-paging-box {
+	width: auto;
+	float: right;
+	text-align: center;
+	padding-top: 20px;
+	user-select: none;
+	padding-bottom: 10px;
+}
+
+.app-grid-paging .app-grid-paging-box i {
+	font-size: 20px;
+	padding: 5px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.app-grid-paging .app-grid-paging-box span {
+	padding: 5px;
+	position: relative;
+	top: -3px;
+	user-select: none;
+}
+
+.app-grid-tools-left .app-field-parent {
+	float: left;
+	margin-right: 10px !important;
+}
+
+.app-grid-tools-right .app-field-parent {
+	float: right;
+	margin-left: 10px !important;
+}
+
+.app-grid-tools-left i {
+	float: left;
+}
+
+.app-grid-tools-right i:first-child {
+	float: right;
+	margin-left: 10px !important;
+}
+
+.app-grid-tools-right i {
+	float: right;
+	margin-left: 10px !important;
+}
+
+.app-grid-tools .app-field-parent {
+	display: inline-block !important;
+}
+
+.app-grid-tools .app-field-parent .app-field-input-container {
+	padding-bottom: 10px !important;
+}
+
+.app-grid-tools input {
+	background-color: white !important;
+	margin-top: 8px !important;
+	text-indent: 8px !important;
+}
+
+.app-grid-tools select {
+	background-color: white !important;
+	margin-top: 8px !important;
+	text-indent: 8px !important;
+}
+
+.app-grid-tools {
+
+}
+
+.app-grid-tools i:hover {
+	color: var(--app-background-color) !important;
+	cursor: pointer;
+	user-select: none;
+}
+
+.app-grid-tools i {
+	display: inline !important;
+	position: relative;
+	top: 32px;
+	font-size: 22px;
+}
+
+.app-grid-paging-btn-disabled {
+	opacity: 0.5;
+	cursor: default !important;
+}
+
+.app-grid-icon-header {
+
+}
+
+.app-grid-icon-cell {
+	width: 30px;
+	text-align: center;
+}
+
+.app-grid-action {
+	width: 30px;
+	text-align: center;
+}
+
+.app-grid-shrink {
+	width: 1px;
+	white-space: nowrap;
+}
+
+.app-grid-nowrap {
+	white-space: nowrap;
+}
+
+.app-grid-caption {
+	font-size: 0.8em;
+	line-height: 1 !important;
+}
+
+.app-grid-shrink span {
+	white-space: nowrap;
+}
+
+.app-grid-action i:hover {
+	color: var(--app-background-color) !important;
+	cursor: pointer;
+	user-select: none;
+}
+
+.app-grid-action i:hover[disabled] {
+	color: inherit !important;
+	cursor: default;
+}
+
+.app-grid-action i[disabled] {
+	opacity: 0.5;
+}
+
+.app-grid-title {
+	color: var(--app-background-darker);
+	background-color: var(--app-background-lighter) !important;
+	padding: 3px;
+	font-weight: bold;
+	padding-left: 10px;
+	padding-top: 5px;
+	border-bottom: solid 1px var(--app-background-color);
+}
+
+.app-grid-widgets-container {
+	width: 100%;
+	margin-top: 10px;
+	display: table;
+}
+
+.app-grid-widgets-subcontainer {
+	position: relative;
+	left: -5px;
+	top: -5px;
+	margin-right: -10px;
+	margin-bottom: -10px;
+}
+
+.app-grid-footer {
+	border-top: solid 1px rgba(0, 0, 0, 0.1) !important;
+	font-weight: bold;
+	color: var(--app-background-darker);
+}
+
+.app-grid-footer span {
+	color: var(--app-background-darker);
+}
+
+.app-grid-widget {
+	display: inline-block;
+	vertical-align: top;
+	margin: 5px;
+}
+
+.grid-empty-label {
+
+}
+
+.grid-empty-icon {
+
+}
+
+.app-grid-empty-container {
+	user-select: none;
+	margin: 0 auto;
+	margin-top: 20vh;
+	text-align: center;
+	font-size: 1em;
+	display: table;
+}
+
+.app-grid-empty-container .icon {
+	font-weight: 400;
+	font-size: 3.2em;
+	text-align: right;
+	border-right: solid 1px #c0c0c0;
+	display: table-cell;
+	height: 100%;
+	vertical-align: middle;
+	padding-right: 10px;
+	padding-top: 1px;
+	color: var(--app-background-dark) !important;
+	opacity: 0.5 !important;
+}
+
+.app-grid-empty-container .message {
+	margin: 0;
+	display: inline-block;
+	text-align: left;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	color: var(--app-background-dark);
+
+}
+
+.app-grid-empty-container .message div {
+	padding-left: 10px;
+	margin: 0;
+}
+
+.app-grid-empty-container .message span {
+	font-size: 1em;
+	background-color: transparent !important;
+	border: none !important;
+	margin-left: 11px !important;
+	color: #009eb9;
+}
+
+.app-grid-empty-container a {
+	font-size: 1em;
+	background-color: transparent !important;
+	border: none !important;
+	margin-left: 11px !important;
+	color: #4e4cc6 !important;
+}
+
+.app-grid-empty-container a:hover {
+	text-decoration: underline !important;
+	opacity: 1;
+}
+
+.app-grid-chips .app-chip:not(:last-child) {
+	margin-right: 5px !important;
+}
+
+.app-grid-chips .app-chip {
+	padding-top: 1px !important;
+	padding-bottom: 1px !important;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	position: relative;
+	top: -1px;
+}
+
+.app-grid .app-grid-table tr td button {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	box-shadow: none !important;
+	cursor: pointer;
+	border: none !important;
+	padding-left: 6px;
+	padding-right: 6px;
+	border-radius: 4px;
+	font-size: 12px;
+	color: var(--app-foreground-color);
+	display: inline-block;
+	white-space: nowrap !important;
+	background-color: var(--app-background-color);
+	position: relative;
+	top: -1px;
+}
+
+.app-grid .app-grid-table tr td button:not(:last-child) {
+	margin-right: 5px;
+}
+
+.app-grid .app-grid-table tr td button:hover {
+	color: var(--app-foreground-color);
+	background-color: var(--app-background-darker) !important;
+}
+
+.app-grid-number {
+	text-align: right;
+}
+
+.app-grid-widget-row {
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-top: 5px
+}
+
+.app-grid-state-icon i {
+	margin: 0;
+	padding: 0;
+	position: relative;
+	left:3px;
+}
+
+.app-grid-state-icon {
+	width: 35px;
+	text-align: center;
+	font-size: 1.8em;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
