@@ -1,4 +1,4 @@
-# Nodrix Anxeb Common Tool Kit
+# Nodrix Anxeb Common Toolkit
 
 **Setting Up**
 
@@ -12,4 +12,4 @@
 **Notes**
 
 - You can change packages scripts to customize vendors directory.
-- You can change root directory before cloning submodule
+- You can change root directory name before cloning submodule.
