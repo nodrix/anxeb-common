@@ -1678,12 +1678,14 @@ a.list-group-item:hover, a.list-group-item:focus, a.list-group-item.hover {
 .avatar {
 	position: relative;
 	display: inline-block;
-	width: 40px;
+	height: 42px;
+	width: 42px;
 	line-height: 1;
 	border-radius: 500px;
 	white-space: nowrap;
 	font-weight: bold;
 }
+
 
 .avatar img {
 	border-radius: 500px;
