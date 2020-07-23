@@ -30,7 +30,8 @@ const $default = function (value, def) {
 module.exports = function (context, params) {
 	let _self = this;
 	let _context = context;
-	let _module = params.module;
+	let _templatesPath = params.templates;
+	let _storagePath = params.storage;
 
 	let _helpers = {
 		divide  : function (context, params, data) {
@@ -257,7 +258,7 @@ module.exports = function (context, params) {
 
 	_self.build = async function (params) {
 		let apiUri = context.service.socket.uri + anxeb.utils.url.normalize(params.api);
-		let templatePath = anxeb.utils.path.join('modules', _module, 'templates', 'reports', params.hbs);
+		let templatePath = anxeb.utils.path.join(_templatesPath, params.hbs);
 
 		let data = await _context.socket.do.get({
 			uri     : apiUri,
@@ -270,7 +271,7 @@ module.exports = function (context, params) {
 		let name = data[params.key_field || 'id'];
 		let fileGroup = params.group || 'misc';
 
-		let reportFilePath = _context.service.locate.storage('modules', _module, 'reports', fileGroup, name + '.pdf');
+		let reportFilePath = _context.service.locate.storage(_storagePath || 'reports', fileGroup, name + '.pdf');
 		let helpers = {};
 
 		if (params.helpers == null) {
@@ -312,8 +313,7 @@ module.exports = function (context, params) {
 		}
 
 		let fileName = params.name + '.pdf';
-		let reportFilePath = _context.service.locate.storage('modules', _module, 'reports', params.group || 'misc', fileName);
-
+		let reportFilePath = _context.service.locate.storage(_storagePath || 'reports', params.group || 'misc', fileName);
 		let attachmentName = encodeURIComponent(params.attachment ? (params.attachment + '.pdf') : fileName);
 
 		_context.file(reportFilePath, {
