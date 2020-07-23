@@ -1,4 +1,4 @@
-<div class="app-grid" v-if="source">
+<div class="app-grid" v-if="source != null">
 	<div v-if="source.length === 0 && emptyOptions != null" class="app-grid-empty-container" :style="{'margin-top' : emptyOffset}">
 		<div class="icon">
 			<span class="fas" :class="emptyOptions.icon != null ? [emptyOptions.icon] : ['fa-exclamation-circle']"></span>
@@ -24,11 +24,11 @@
 		</div>
 
 		<div class="_table">
-		<table class="app-grid-table" v-if="listType == null || listType === 'table'">
-			<slot name="header" v-bind:options="{sort:sort}"></slot>
-			<slot v-for="row in rows" name="rows" v-bind:row="row"></slot>
-			<slot name="footer"></slot>
-		</table>
+			<table class="app-grid-table" v-if="listType == null || listType === 'table'">
+				<slot name="header" v-bind:options="{sort:sort}"></slot>
+				<slot v-for="row in rows" name="rows" v-bind:row="row"></slot>
+				<slot name="footer"></slot>
+			</table>
 		</div>
 
 		<div class="app-grid-widgets-container" v-if="listType === 'widget'">

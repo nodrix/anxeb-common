@@ -14,7 +14,7 @@
 				</router-link>
 
 				<div v-if="group.pages && group.pages.length && (!group.type || group.type === 'Menu')" class="dropdown-menu dropdown-menu-overlay animated fadeIn pull-right">
-					<div v-for="(page, index) in group.pages" v-bind:class="{'app-tool-active' : page.active === true}" v-if="page.enabled !== false" v-show="(!page.role || page.role.includes($root.profile.role)) && (!page.owners || page.owners.includes($root.profile.type))" v-on:click="page.action ? page.action() : undefined" v-on:mouseover="$parent.page.setHint(page)">
+					<div v-for="(page, index) in group.pages" v-bind:class="{'app-tool-dropdown-active' : page.active === true}" v-if="page.enabled !== false" v-show="(!page.role || page.role.includes($root.profile.role)) && (!page.owners || page.owners.includes($root.profile.type))" v-on:click="page.action ? page.action() : undefined" v-on:mouseover="$parent.page.setHint(page)">
 						<div class="dropdown-divider" v-if="page.divider === true && index > 0"></div>
 						<router-link class="dropdown-item" :to="page.path || ''">
 							<i v-if="page.icon" v-bind:style="{color:page.icon.color + '!important'}" class="fa fa-fw text-muted" :class="page.icon.class"></i>
