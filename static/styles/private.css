@@ -1346,6 +1346,31 @@ button {
   background-color: #F0F0F0 !important;
 }
 
+.app-field-reference-list-item {
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.app-field-reference-list-item .app-list-item-icon {
+  padding-left: 8px;
+}
+
+.app-field-reference-list-item:hover {
+  cursor: pointer;
+  background-color: #fafafa !important;
+  border-radius: 30px;
+}
+
+.app-field-reference-list-selected {
+  background-color: #f0f0f0;
+  border-radius: 30px;
+  border-left: solid 2px var(--app-background-color);
+  border-left-width: 4px !important;
+}
+
 .app-tenant-list-item-selected {
   background-color: #f0f0f0;
   border-left: solid 2px var(--app-background-color);
@@ -1987,6 +2012,7 @@ form label {
 
 .app-field-input-container input {
   font-size: 14px !important;
+  width: 100%;
 }
 
 .app-field-input-container .app-field-image-container {
@@ -2099,14 +2125,14 @@ form label {
 .app-field-custom-none {
   padding-left: 0 !important;
   padding-right: 0 !important;
-  padding-top: 1px;
+  padding-top: 3px;
   padding-bottom: 1px;
   font-size: 11px !important;
   color: var(--app-background-dark) !important;
   background-color: rgba(0, 0, 0, 0.08);
   text-align: center !important;
-
-  /*text-align: center;
+  margin-top: 1px;
+  border-radius: 12px 12px 0 0 /*text-align: center;
   border-top: solid 1px #e0e0e0;
   padding: 3px;
   color: var(--app-background-dark);*/
@@ -2152,6 +2178,7 @@ form label {
 
 .app-chip i {
   margin-left: 4px;
+  margin-right: 4px;
   font-size: 14px;
   position: relative;
   top: 1px;
@@ -2159,7 +2186,7 @@ form label {
 }
 
 .app-field-custom-button {
-  font-size: 13px;
+  font-size: 12px;
   margin-top: 19px;
   cursor: pointer;
   margin-left: 10px;
@@ -2186,6 +2213,9 @@ form label {
 }
 
 .app-field-custom-top-label {
+  height: 26px;
+  margin-bottom: 1px;
+  border-radius: 0 0 12px 12px;
   padding-left: 0 !important;
   padding-right: 0 !important;
   padding-top: 1px;
@@ -2245,7 +2275,7 @@ form label {
   border: solid 1px #cdcdcd !important;
 }
 
-.modal .app-field-input-container .app-field-custom-container {
+.app-field-custom-container {
   border-bottom: solid 1px #cdcdcd !important;
 }
 

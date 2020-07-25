@@ -4173,7 +4173,6 @@ div.input-group > .select2-container > .selection {
 .bg-auto:before {
 	content: "";
 	position: absolute;
-	width: inherit;
 	top: 0;
 	bottom: 0;
 	background-color: inherit;

@@ -1,9 +1,10 @@
 <div class="app-panel-container"
      v-if="(hideAt == null || screen.width == null || screen.width >= parseInt(hideAt)) && (showAt == null || screen.width == null || screen.width < parseInt(showAt))"
-     :style="{width: finalWidth, 'padding-left': offset === 'left' || offset === 'both' ? '50px' : null, 'padding-right': offset === 'right' || offset === 'both' ? '50px' : null }"
+     :style="{'max-width':maxWidth + '!important', width: finalWidth, 'padding-left': offset === 'left' || offset === 'both' ? '50px' : null, 'padding-right': offset === 'right' || offset === 'both' ? '50px' : null }"
      :class="{'app-panel-over-left' : over === 'true' && isLeft, 'app-panel-over-right' : over === 'true' && isRight, 'app-panel-container-body': isBody,
      'app-panel-container-left': isLeft, 'app-panel-container-right': isRight, 'pull-right' : isRight,
      'col-lg': isLeft || isRight, 'dimmed' : isLeft || isRight,  'lt' : isLeft || isRight,  'bg-auto':isLeft || isRight}" v-bind="$attrs">
+
 	<div class="app-panel-container-table" :class="{'app-panel-shadow' : over === 'true' && visible === true}">
 		<div v-if="visible && title" class="app-panel-content-header">
 			<div class="pos-rlt app-panel-header app-session">
@@ -50,7 +51,7 @@
 			</div>
 
 			<transition name="fade">
-			<div class="_more-icon" v-if="visible && scrollValue != null && scrollValue > 5" :style="{width: finalWidth}">
+			<div class="_more-icon" v-if="visible && scrollValue != null && scrollValue > 5" :style="{width: finalWidth,'max-width':maxWidth + '!important'}">
 				<i v-on:click="scrollDown" class="fa fa-chevron-circle-down"></i>
 			</div>
 			</transition>

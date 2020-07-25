@@ -153,23 +153,15 @@ anxeb.vue.include.component('navigator', function (helpers) {
 	return {
 		template : '/components/navigator.vue',
 		props    : ['init'],
-		//TODO: Implement injection in all components that use $parent: inject log and root
 		inject   : ['session', 'page'],
 		created  : function () {
 			let _self = this;
-
-			_self.$router.afterEach(function (to, from) {
-				_self.refresh();
-			});
-
+			_self.$router.afterEach(function (to, from) { _self.refresh(); });
 			_self.init(_self);
-
 			_self.refresh();
 		},
 		methods  : {
-			hint       : function (item) {
-
-			},
+			hint       : function (item) { },
 			refresh    : function () {
 				let _self = this;
 

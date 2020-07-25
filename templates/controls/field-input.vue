@@ -1,9 +1,10 @@
 <div v-bind="$attrs" class="app-field-parent">
 	<div class="md-form-group app-field-input-container" :field-name="name" v-if="type === 'calendar'">
-		<vc-date-picker mode='single' title-position="left" locale="es" v-model="date" :popover="{placement : 'bottom', visibility: 'focus'}" :is-expanded="false">
+		<vc-date-picker ref="calendar" mode='single' title-position="left" locale="es" v-model="date" :popover="{placement : calendarPlacement || 'top-end', visibility: 'focus'}" :is-expanded="false">
 			<input v-fill-focus style="cursor: pointer" :style="{color:valueColor, 'font-weight': valueWeight}" :readonly="true" type="text" class="md-input" :value="post_value" v-on="listener" :id="id" :required="required !== undefined" v-focus="focus !== undefined">
 		</vc-date-picker>
-		<i class="fa fa-times _action" v-on:click="clear" v-if="date != null"></i>
+		<span style="position: relative; left: -10px; top:-2px"><i class="fa fa-times _action" style="color:black" v-on:click="clear" v-if="date != null"></i></span>
+		<span style="position: relative; left: -10px; top:-2px"><i class="fa fa-calendar _action" style="color:black; pointer-events: none;" v-if="date == null"></i></span>
 
 		<input type="hidden" class="md-input">
 		<label style="width: 100%">

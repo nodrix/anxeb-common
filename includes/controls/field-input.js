@@ -24,7 +24,7 @@ anxeb.vue.include.component('field-input', function () {
 	return {
 		template     : '/controls/field-input.vue',
 		inheritAttrs : false,
-		props        : ['label', 'value', 'focus', 'required', 'type', 'id', 'rows', 'allow-empty', 'force-uppercase', 'max-length', 'min-length', 'readonly', 'decimals', 'prefix', 'percent', 'sufix', 'comma', 'field-name', 'value-color', 'value-weight', 'date-format'],
+		props        : ['label', 'value', 'focus', 'required', 'type', 'id', 'rows', 'allow-empty', 'force-uppercase', 'max-length', 'min-length', 'readonly', 'decimals', 'prefix', 'percent', 'sufix', 'comma', 'field-name', 'value-color', 'value-weight', 'date-format', 'calendar-placement', 'unix'],
 		mounted      : function () {
 			let _self = this;
 			this.name = _self.fieldName || (_self.$vnode.data.model != null ? _self.$vnode.data.model.expression : null);
@@ -32,13 +32,13 @@ anxeb.vue.include.component('field-input', function () {
 		data         : function () {
 			return {
 				name : null,
-				date : null
+				date : null,
 			}
 		},
 		methods      : {
-			clear : function () {
+			clear        : function () {
 				this.date = null;
-			}
+			},
 		},
 		watch        : {
 			date : function (value) {
@@ -49,7 +49,11 @@ anxeb.vue.include.component('field-input', function () {
 					} else {
 						date = moment(value);
 					}
-					this.$emit('input', date);
+					if (this.unix === true || this.unix === 'true') {
+						this.$emit('input', date.utc().unix());
+					} else {
+						this.$emit('input', date);
+					}
 				} else {
 					this.$emit('input', null);
 				}
