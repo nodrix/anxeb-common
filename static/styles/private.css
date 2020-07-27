@@ -65,6 +65,27 @@ a, router-link {
   color: var(--app-background-darker) !important;
 }
 
+.modal-fl {
+  width: 90vw !important;
+  max-width: 1024px !important;
+}
+
+.modal-fl .modal-body {
+  height: calc(90vh - 120px) !important;
+}
+
+.modal-md {
+  min-width: 600px !important;
+}
+
+.modal-lg {
+  min-width: 800px !important;
+}
+
+.modal-sm {
+  min-width: 300px !important;
+}
+
 .modal-footer button {
   min-width: 100px;
 }
