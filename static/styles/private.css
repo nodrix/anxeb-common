@@ -2979,6 +2979,7 @@ form label {
 .app-actions-button ._actions ._separator:first-child {
   padding-top: 3px;
   padding-left: 14px;
+  padding-right: 14px;
   padding-bottom: 3px;
   font-size: 10px;
   text-transform: uppercase;

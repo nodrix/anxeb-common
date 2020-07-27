@@ -43,6 +43,13 @@ anxeb.vue.include.helper('tools', {
 			return result;
 		}
 	},
+	delay         : function (ms) {
+		return new Promise(function (resolve) {
+			setTimeout(function () {
+				resolve();
+			}, ms);
+		});
+	},
 	requiredError : function (prefix, fields, newMsg) {
 		let _fields = [];
 		let msg = newMsg || 'Uno o varios campos son requeridos en la solicitud';
@@ -94,14 +101,19 @@ anxeb.vue.include.helper('tools', {
 
 		for (let i = 0; i < fields.length; i++) {
 			let field = fields[i];
-			let container = getContainer(field.name);
+			let $name = field.name;
+			if (field.name.indexOf('.') > -1) {
+				$name = field.name.split('.').filter(item => isNaN(item)).join('.');
+			}
+
+			let container = getContainer($name);
 			container.addClass("app-invalid-field");
 			container.find(".app-field-custom-container").removeClass("app-focus-field");
 
 			if (field.index !== undefined) {
 				if (inx === null || inx > field.index) {
 					inx = field.index;
-					focusField = field.name;
+					focusField = $name;
 				}
 			}
 		}

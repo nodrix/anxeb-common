@@ -118,14 +118,8 @@ anxeb.vue.include.component('modal', function (helpers) {
 				}
 			},
 			close          : function () {
-				let _self = this;
-				_self.idle();
-				_self.active = false;
-				return new Promise(function (resolve, reject) {
-					setTimeout(function () {
-						resolve();
-					}, 150);
-				});
+				this.idle();
+				this.active = false;
 			},
 			setup          : function (params, buttons) {
 				let _self = this;

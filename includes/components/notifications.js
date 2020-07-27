@@ -34,39 +34,41 @@ anxeb.vue.include.component('notifications', function (helpers) {
 		props    : ['max', 'delay', 'reversed', 'disabled', 'floating'],
 		methods  : {
 			push  : function (params) {
-				if (this.disabled === true) {
-					return;
-				}
 				let _self = this;
-				let max = this.max || 1;
-				params.delay = params.delay || this.delay;
+				setTimeout(function () {
+					if (_self.disabled === true) {
+						return;
+					}
+					let max = this.max || 1;
+					params.delay = params.delay || this.delay;
 
-				if (max > 0) {
-					for (let i = 0; i <= _self.list.length - max - 1; i++) {
-						let hid = _self.list[i];
-						for (let d = _self.list.length - 1; d >= 0; d--) {
-							if (_self.list[d] === hid) {
-								_self.list.splice(d, 1);
+					if (max > 0) {
+						for (let i = 0; i <= _self.list.length - max - 1; i++) {
+							let hid = _self.list[i];
+							for (let d = _self.list.length - 1; d >= 0; d--) {
+								if (_self.list[d] === hid) {
+									_self.list.splice(d, 1);
+								}
 							}
 						}
 					}
-				}
 
-				if (_self.current) {
-					if (_self.current.type === params.type && _self.current.message === params.message) {
-						return;
-					}
-				}
-
-				let alert = new Alert(params);
-				_self.list.push(alert);
-				alert.show(function () {
-					for (let d = _self.list.length - 1; d >= 0; d--) {
-						if (_self.list[d] === alert) {
-							_self.list.splice(d, 1);
+					if (_self.current) {
+						if (_self.current.type === params.type && _self.current.message === params.message) {
+							return;
 						}
 					}
-				});
+
+					let alert = new Alert(params);
+					_self.list.push(alert);
+					alert.show(function () {
+						for (let d = _self.list.length - 1; d >= 0; d--) {
+							if (_self.list[d] === alert) {
+								_self.list.splice(d, 1);
+							}
+						}
+					});
+				}, _self.disabled === true ? 50 : 0);
 			},
 			clear : function () {
 				this.list = [];
