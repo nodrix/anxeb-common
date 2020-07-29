@@ -10,7 +10,7 @@
 		<label>${label}</label>
 	</div>
 	<div v-else class="md-form-group app-field-input-container app-field-categories-container" :field-name="name" :alt-fields="altFields">
-		<i v-if="busy.fetching && busy.display && !canBrowse" class="pull-right fas app-field-custom-button fa-circle-notch fa-spin"></i>
+		<i v-if="busy.fetching && !canBrowse" class="pull-right fas app-field-custom-button fa-circle-notch fa-spin"></i>
 		<i v-else class="pull-right fas app-field-custom-button" :class="[(isSingle || isLineage) ? 'fa-caret-down' : 'fa-plus']" v-on:click="browse()" ref="browseButton"></i>
 
 		<div v-if="anyValue" class="app-field-custom-container" style="cursor: pointer" v-on:click="browse()">

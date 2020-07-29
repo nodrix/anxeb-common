@@ -125,8 +125,16 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 						$references = keys.filter((key) => available.includes(key)).map((key) => value[key]);
 					}
 					if ($references.length > 0) {
-						let res = await helpers.api.get('/references', { params : { branches : $references } });
-						_self.branches = res.data;
+						_self.setBusy();
+						try {
+							let res = await helpers.api.get('/references', { params : { branches : $references } });
+							_self.branches = res.data;
+						} catch (err) {
+							_self.branches = [];
+							_self.log(err).exception();
+						} finally {
+							_self.setIdle();
+						}
 					} else {
 						_self.branches = [];
 					}

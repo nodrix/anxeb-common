@@ -18,11 +18,13 @@ anxeb.vue.include.component('modal', function (helpers) {
 		_self.busy = params.busy;
 		_self.visible = params.visible;
 
-		_self.action = function () {
-			if (params.action) {
-				params.action(_self, _self.modal);
-			}
+		_self.action = async function () {
 
+			if (params.action) {
+				_self.modal.busy();
+				await params.action(_self, _self.modal);
+				_self.modal.idle();
+			}
 			if (_self.close === true) {
 				_self.modal.close();
 			}
