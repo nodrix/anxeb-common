@@ -27,7 +27,8 @@
 
 		<div v-else class="app-field-custom-container">
 			<div class="app-field-custom-single pointer" v-on:click="browse()">
-				- Seleccione -
+				<span v-if="busy.fetching"><i class="fas fa-circle-notch fa-spin"></i><span>&nbsp;Buscando...</span></span>
+				<span v-else>- Seleccione -</span>
 			</div>
 		</div>
 		<input class="md-input" style="display: none">
@@ -37,12 +38,12 @@
 				<span style="font-size: 15px; position: relative; top: 1px">${pageCaption}</span>
 				<i v-if="current.next != null" style="float: right; font-size: 14px; margin-right: 3px; padding:4px; cursor: pointer" class="fa fa-chevron-right" v-on:click="nextPage()"></i>
 			</div>
-			<div class="list white" style="overflow-y: auto; max-height: 230px; padding-top: 5px; padding-bottom: 5px">
+			<div class="list white" style="overflow-y: auto; max-height: 230px; padding-top: 4px">
 				<div v-on:click="select(reference)" v-for="reference in current.references">
 					<div class="no-border list-item b-l b-l-2x app-tenant-list-item app-field-reference-list-item" :class="{'app-field-reference-list-selected' : isSelected(reference.id)}">
 						<div class="list-body">
 							<div class="pull-left text-xs" style="font-size: 14px; margin-right: 5px; padding-top: 1px">
-								<i v-if="busy.fetching && isSelected(reference.id)" class="fas fa-circle-notch fa-spin app-field-custom-unselected-icon ng-hide m-l-sm" style="color:#199519"></i>
+								<i v-if="busy.fetching && busy.reference === reference" class="fas fa-circle-notch fa-spin app-field-custom-unselected-icon ng-hide m-l-sm" style="color:#199519"></i>
 								<i v-else-if="isSelected(reference.id)" class="far fa-check-circle app-field-custom-unselected-icon ng-hide m-l-sm" style="color:#199519"></i>
 								<i v-else class="far fa-circle app-field-custom-unselected-icon ng-hide m-l-sm"></i>
 							</div>

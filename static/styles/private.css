@@ -395,7 +395,24 @@ html {
 }
 
 .app-page-form {
+  padding-top: 10px;
   padding-bottom: 14px;
+}
+
+.app-field-map-button {
+  padding: 10px;
+  border-radius: 2px;
+  background-color: white;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.03);
+  margin-left: 10px;
+  margin-top: 10px;
+  font-size: 18px;
+  color:#666666;
+  display: inline-block;
+}
+
+.app-field-map-button:hover {
+  color: black;
 }
 
 .app-page-form .app-field-parent select {
@@ -418,7 +435,8 @@ html {
 }
 
 .app-page-form .app-field-parent {
-  padding-top: 10px;
+  padding-top: 7px;
+  padding-bottom: 0px;
 }
 
 .app-page-form .app-field-parent .app-field-input-container {
@@ -428,6 +446,11 @@ html {
 .app-top-action-icon {
   cursor: pointer;
   -webkit-transition: all 0.5s;
+}
+
+.md-form-group {
+  padding: 18px 0 0px 0!important;
+  position: relative;
 }
 
 .app-top-action-icon:hover {
@@ -1373,6 +1396,7 @@ button {
   padding-right: 5px;
   margin-right: 5px;
   margin-left: 5px;
+  margin-bottom: 4px;
 }
 
 .app-field-reference-list-item .app-list-item-icon {
@@ -2051,11 +2075,11 @@ form label {
 }
 
 .app-field-lookup-container .app-field-custom-button {
-  margin-top: 14px !important;
+  /*margin-top: 14px !important;*/
 }
 
 .app-field-lookup-container .app-field-custom-container {
-  margin-top: 3px !important;
+  /*margin-top: 3px !important;*/
   padding-bottom: 2px !important;
 }
 

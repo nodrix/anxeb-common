@@ -88,9 +88,7 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 			},
 			browse        : function () {
 				let _self = this;
-				if (_self.busy.searching && _self.busy.display) {
-					return;
-				}
+
 				_self.reset();
 				_self.canBrowse = !_self.canBrowse;
 

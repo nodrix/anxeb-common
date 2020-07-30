@@ -152,7 +152,7 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 			},
 			select       : async function (reference) {
 				let _self = this;
-				_self.setBusy();
+				_self.setBusy(reference);
 				try {
 					if (reference.childs === 0) {
 						let $value = _self.value;
@@ -208,9 +208,11 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 				let _self = this;
 				_self.busy.fetching = false;
 				_self.busy.display = false;
+				_self.busy.reference = null;
 			},
-			setBusy      : function () {
+			setBusy      : function (reference) {
 				let _self = this;
+				_self.busy.reference = reference;
 				_self.busy.fetching = true;
 				setTimeout(function () {
 					if (_self.busy.fetching) {
