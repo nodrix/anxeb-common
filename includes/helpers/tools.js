@@ -31,6 +31,22 @@ anxeb.vue.include.helper('tools', {
 			}
 			return value
 		},
+		bytes  : function (value) {
+			let _format = this;
+			const ONE_KB = 1000;
+			const ONE_MB = 1000000;
+			let sufix = 'B';
+			let caption = _format.number(value, { decimals : 0, comma : true });
+
+			if (value >= ONE_MB) {
+				sufix = 'MB';
+				caption = _format.number((value / ONE_MB), { decimals : 2, comma : true });
+			} else if (value >= ONE_KB) {
+				sufix = 'KB';
+				caption = _format.number((value / ONE_KB), { decimals : 2, comma : true });
+			}
+			return caption + ' ' + sufix;
+		},
 	},
 	data          : {
 		copy : function (data, params) {

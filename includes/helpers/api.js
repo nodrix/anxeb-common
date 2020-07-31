@@ -30,9 +30,9 @@ anxeb.vue.include.helper('api', function () {
 		return Promise.reject(err);
 	});
 
-	let call = function (method, url, params) {
+	let call = function (method, url, params, options) {
 		return new Promise(function (resolve, reject) {
-			api[method](url, params).then(function (res) {
+			api[method](url, params, options).then(function (res) {
 				resolve(res);
 			}).catch(function (err) {
 				err = err.response && err.response.data && err.response.data.message ? err.response.data : err;
@@ -49,17 +49,17 @@ anxeb.vue.include.helper('api', function () {
 	return {
 		interceptors : api.interceptors,
 		axios        : api,
-		get          : function (url, params) {
-			return call('get', url, params);
+		get          : function (url, params, options) {
+			return call('get', url, params, options);
 		},
-		post         : function (url, params) {
-			return call('post', url, params);
+		post         : function (url, params, options) {
+			return call('post', url, params, options);
 		},
-		delete       : function (url, params) {
-			return call('delete', url, params);
+		delete       : function (url, params, options) {
+			return call('delete', url, params, options);
 		},
-		put          : function (url, params) {
-			return call('put', url, params);
+		put          : function (url, params, options) {
+			return call('put', url, params, options);
 		}
 	};
 });

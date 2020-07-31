@@ -4,5 +4,5 @@
 		<a class="app-link" :href="downloadUrl" target="_blank">descargar</a> el reporte para verlo.
 	</object>
 
-	<iframe ref="downloadIframe" style="display:none;"></iframe>
+		<iframe ref="downloadIframe" style="display:none;"></iframe>
 </div>

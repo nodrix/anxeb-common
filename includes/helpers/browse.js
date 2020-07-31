@@ -1,6 +1,26 @@
 'use strict';
 
 anxeb.vue.include.helper('browse', {
+	file  : function () {
+		return new Promise(function (resolve, reject) {
+			let input = document.createElement('input');
+			input.type = 'file';
+
+			input.onchange = function () {
+				if (this.files && this.files[0]) {
+					let file = this.files[0];
+					if (file) {
+						resolve(file);
+					} else {
+						if (reject) {
+							reject();
+						}
+					}
+				}
+			};
+			input.click();
+		});
+	},
 	image : function (params) {
 		return new Promise(function (resolve, reject) {
 			let input = document.createElement('input');
