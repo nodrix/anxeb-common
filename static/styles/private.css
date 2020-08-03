@@ -1416,6 +1416,30 @@ button {
   border-left-width: 4px !important;
 }
 
+.app-field-picker-list-item {
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 7px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-bottom: 4px;
+}
+
+.app-field-picker-list-item .app-list-item-icon {
+  padding-left: 8px;
+}
+
+.app-field-picker-list-item:hover {
+  cursor: pointer;
+  background-color: #fafafa !important;
+  border-radius: 30px;
+}
+
+.app-field-picker-list-selected {
+  background-color: #f0f0f0;
+  border-radius: 30px;
+}
+
 .app-tenant-list-item-selected {
   background-color: #f0f0f0;
   border-left: solid 2px var(--app-background-color);
@@ -2088,6 +2112,10 @@ form label {
   top: -5px !important;*/
 }
 
+.modal .app-field-input-container .app-field-custom-container {
+  margin-top: 3px;
+}
+
 .app-field-input-container .app-field-custom-container {
   background-color: #ffffff;
   margin-top: 8px;
@@ -2185,7 +2213,7 @@ form label {
 
 .app-field-custom-chips {
   padding-top: 6px;
-  padding-left: 6px;
+  padding-left: 2px;
 }
 
 .app-field-custom-single {
@@ -2228,6 +2256,10 @@ form label {
   position: relative;
   top: 1px;
   cursor: pointer !important;
+}
+
+.modal .app-field-custom-button {
+  margin-top: 16px;
 }
 
 .app-field-custom-button {
@@ -2338,8 +2370,8 @@ form label {
 }
 
 .modal .app-field-categories-container {
-  position: relative;
-  top: -5px !important;
+  /*position: relative;
+  top: -5px !important;*/
 }
 
 .app-field-input-container .app-field-barcode-container {

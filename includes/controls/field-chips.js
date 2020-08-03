@@ -4,7 +4,7 @@ anxeb.vue.include.component('field-chips', function (helpers) {
 	return {
 		template     : '/controls/field-chips.vue',
 		inheritAttrs : false,
-		props        : ['label', 'id', 'readonly', 'type', 'value', 'direction', 'alt-fields'],
+		props        : ['label', 'id', 'readonly', 'type', 'value', 'direction', 'alt-fields', 'placeholder', 'validate'],
 		mounted      : function () {
 			let _self = this;
 			_self.name = _self.$vnode.data.model != null ? (_self.$vnode.data.model.expression) : null;
@@ -36,7 +36,7 @@ anxeb.vue.include.component('field-chips', function (helpers) {
 			}
 		},
 		methods      : {
-			clear : function () {
+			clear          : function () {
 				let _self = this;
 				_self.$emit('input', []);
 				_self.reset();
@@ -73,11 +73,23 @@ anxeb.vue.include.component('field-chips', function (helpers) {
 				let chips = _self.newChips ? _self.newChips.split(',').filter(item => item != null && item.trim().length > 0).map(item => item.trim()) : [];
 
 				if (chips.length > 0) {
-					chips.iterate((chip) => {
-						_self.chips.push({
-							name : chip
+					if (_self.validate != null) {
+						chips.iterate((chip) => {
+							let validation = _self.validate(chip);
+							if (validation) {
+								let $value = validation === true ? chip : validation;
+								if (!_self.chips.includes($value)) {
+									_self.chips.push($value);
+								}
+							}
 						});
-					});
+					} else {
+						chips.iterate((chip) => {
+							if (!_self.chips.includes(chip)) {
+								_self.chips.push(chip);
+							}
+						});
+					}
 					_self.$emit('input', _self.chips);
 				}
 				this.reset();
@@ -87,8 +99,9 @@ anxeb.vue.include.component('field-chips', function (helpers) {
 				this.canBrowse = false;
 				this.selected = null;
 			},
-			remove         : function (chip, index) {
-				this.chips.splice(index, 1);
+			remove         : function (chip) {
+				this.chips = this.chips.filter(item => item !== chip);
+				this.$emit('input', this.chips);
 			},
 		},
 		computed     : {

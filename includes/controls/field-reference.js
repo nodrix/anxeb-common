@@ -53,7 +53,9 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 				_self.references = [];
 
 				res.data.iterate((reference) => {
-					_self.references.push(reference);
+					if (reference.childs > 0) {
+						_self.references.push(reference);
+					}
 				});
 			}
 		};

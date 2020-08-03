@@ -3,18 +3,18 @@
 		<input class="md-input" style="display: none">
 		<div class="app-field-custom-container">
 			<div class="app-field-custom-chips">
-				<span v-for="chip in chips" class="app-chip">${chip.name}</span>
+				<span v-for="chip in chips" class="app-chip">${chip}</span>
 			</div>
 		</div>
 		<label>${label}</label>
 	</div>
 	<div v-else class="md-form-group app-field-input-container app-field-categories-container" :field-name="name" :alt-fields="altFields">
-		<input placeholder="Nombre de Grupo" v-show="canBrowse" class="md-input app-field-lookup-input" v-model="newChips" type="text" ref="txtChip" v-on:keyup.esc.prevent="cancel" v-on:keyup.enter.prevent="enter">
-		<i v-if="!canBrowse && notReadOnly" class="pull-right fas app-field-custom-button fa-plus" v-on:click="browse()" ref="browseButton"></i>
+		<input :placeholder="placeholder" v-show="canBrowse" class="md-input app-field-lookup-input" v-model="newChips" type="text" ref="txtChip" v-on:keyup.esc.prevent="cancel" v-on:keyup.enter.prevent="enter">
+		<i v-if="!canBrowse && notReadOnly" class="pull-right fas app-field-custom-button fa-plus" v-on:click.stop="browse()" ref="browseButton"></i>
 
 		<div v-if="!canBrowse && anyValue" class="app-field-custom-container">
-			<div class="app-field-custom-chips">
-				<span v-for="(chip, index) in chips" class="app-chip">${chip.name}<i class="fas fa-times" v-on:click="remove(chip, index)"></i></span>
+			<div class="app-field-custom-chips" v-on:click="browse()">
+				<span v-for="chip in chips" class="app-chip">${chip}<i class="fas fa-times" v-on:click.stop="remove(chip)"></i></span>
 			</div>
 		</div>
 		<div v-if="!canBrowse && !anyValue" class="app-field-custom-container">
