@@ -4,8 +4,8 @@ module.exports = {
 	query : {
 		build  : function (context, query, fields) {
 			let result = query || {};
-			if (context.query.lookup) {
 
+			if (context.query.lookup) {
 				if (fields != null) {
 					let orr = [];
 					for (let i = 0; i < fields.length; i++) {
@@ -16,24 +16,26 @@ module.exports = {
 							$options : 'i'
 						};
 						orr.push(item);
-						result.$or = orr;
 					}
+					result.$and = [{ $or : orr }];
 				} else {
-					result.$or = [{
-						name : {
-							$regex   : context.query.lookup,
-							$options : 'i'
-						}
-					}, {
-						code : {
-							$regex   : context.query.lookup,
-							$options : 'i'
-						}
-					}, {
-						reference : {
-							$regex   : context.query.lookup,
-							$options : 'i'
-						}
+					result.$and = [{
+						$or : [{
+							name : {
+								$regex   : context.query.lookup,
+								$options : 'i'
+							}
+						}, {
+							code : {
+								$regex   : context.query.lookup,
+								$options : 'i'
+							}
+						}, {
+							reference : {
+								$regex   : context.query.lookup,
+								$options : 'i'
+							}
+						}]
 					}];
 				}
 			}
