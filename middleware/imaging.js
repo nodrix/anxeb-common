@@ -3,61 +3,68 @@
 const anxeb = require('anxeb-node');
 
 module.exports = {
-	processFileRequest : function (context, resource) {
-		context.service.storage.fetch(resource, { stats : true }).then(function (result) {
+	processFileRequest : async function (context, resource, options) {
+		try {
+			let data;
+
+			if (options && options.isPath === true) {
+				data = resource;
+			} else {
+				let fetchResult = await context.service.storage.fetch(resource, { stats : true });
+				data = fetchResult.data;
+			}
 
 			if (context.query.raw === undefined) {
-				let options = null;
+				let sharpOptions = null;
 
 				if (context.query.width) {
-					options = options || {};
-					options.resize = { width : parseInt(context.query.width) };
+					sharpOptions = sharpOptions || {};
+					sharpOptions.resize = { width : parseInt(context.query.width) };
 				}
 
 				if (context.query.height) {
-					options = options || {};
-					options.resize = { height : parseInt(context.query.height) };
+					sharpOptions = sharpOptions || {};
+					sharpOptions.resize = { height : parseInt(context.query.height) };
 				}
 
 				if (context.query.sharpen) {
-					options = options || {};
-					options.sharpen = false;
+					sharpOptions = sharpOptions || {};
+					sharpOptions.sharpen = false;
 				}
 
 				if (context.query.png) {
-					options = options || {};
-					options.png = {
+					sharpOptions = sharpOptions || {};
+					sharpOptions.png = {
 						compressionLevel : context.query.compressionLevel != null ? parseInt(context.query.compressionLevel) : 9,
 						quality          : parseInt(context.query.png)
 					};
 				}
 
 				if (context.query.webp) {
-					options = options || {};
-					options.webp = {
+					sharpOptions = sharpOptions || {};
+					sharpOptions.webp = {
 						alphaQuality : context.query.alphaQuality != null ? parseInt(context.query.alphaQuality) : 100,
 						quality      : parseInt(context.query.webp)
 					};
 				}
 
 				if (context.query.jpg) {
-					options = options || {};
-					options.jpg = {
+					sharpOptions = sharpOptions || {};
+					sharpOptions.jpg = {
 						progressive : context.query.progressive == null,
 						quality     : parseInt(context.query.jpg)
 					};
 				}
 
-				context.image(result.data, options);
+				context.image(data, sharpOptions);
 			} else {
 				context.send({
-					content : result.data
+					content : data
 				});
 			}
-
-		}).catch(function (err) {
+		} catch (err) {
 			context.log.exception.file_not_found.args(resource).throw({ next : context.next, silent : true });
-		});
+		}
 	},
 	getStorageRoutes   : function (names, routes) {
 		let _self = this;
