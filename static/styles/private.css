@@ -2098,6 +2098,28 @@ form label {
   background-size: contain;
 }
 
+.app-field-label-right {
+  text-align: right;
+  position: relative;
+  left: -1px !important;
+}
+
+.app-detail-button {
+  padding: 10px;
+  padding-left: 13px;
+  padding-right: 13px;
+  border-radius: 6px;
+  margin-top: 16px;
+  height: 50px;
+  width: 50px;
+  font-size: 18px;
+}
+
+.app-compact-body .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
 .app-field-lookup-container .app-field-custom-button {
   /*margin-top: 14px !important;*/
 }
@@ -2395,8 +2417,8 @@ form label {
 .md-form-group textarea {
   margin-bottom: -7px !important;
   padding-left: 2px !important;
-  padding-top: 5px!important;
-  padding-bottom: 4px!important;
+  padding-top: 5px !important;
+  padding-bottom: 4px !important;
   padding-right: 10px !important;
   margin-top: 5px;
 }
@@ -3132,7 +3154,7 @@ form label {
 }
 
 .app-drag-area-hover {
-opacity: 0.5;
+  opacity: 0.5;
 }
 
 .app-drag-area-hover ._watermark {

@@ -1,6 +1,6 @@
 <div class="app-panel-container"
      v-if="(hideAt == null || screen.width == null || screen.width >= parseInt(hideAt)) && (showAt == null || screen.width == null || screen.width < parseInt(showAt))"
-     :style="{'max-width':maxWidth + '!important', width: finalWidth, 'padding-left': offset === 'left' || offset === 'both' ? '50px' : null, 'padding-right': offset === 'right' || offset === 'both' ? '50px' : null }"
+     :style="{'max-width':maxWidth + '!important','min-width':minWidth + '!important', width: finalWidth, 'padding-left': offset === 'left' || offset === 'both' ? '50px' : null, 'padding-right': offset === 'right' || offset === 'both' ? '50px' : null }"
      :class="{'app-panel-over-left' : over === 'true' && isLeft, 'app-panel-over-right' : over === 'true' && isRight, 'app-panel-container-body': isBody,
      'app-panel-container-left': isLeft, 'app-panel-container-right': isRight, 'pull-right' : isRight,
      'col-lg': isLeft || isRight, 'dimmed' : isLeft || isRight,  'lt' : isLeft || isRight,  'bg-auto':isLeft || isRight}" v-bind="$attrs">

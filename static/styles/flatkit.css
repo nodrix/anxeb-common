@@ -7231,7 +7231,7 @@ a.text-blue:hover {
 	opacity: 0.45;
 	display: inline-block;
 	top: 5px !important;
-	left: -6px !important;
+	left: -6px;
 }
 
 .md-input.disabled, .md-input[disabled] {

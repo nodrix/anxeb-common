@@ -92,6 +92,7 @@ anxeb.vue.include.helper('tools', {
 
 			return err;
 		} else {
+			$("form .app-invalid-field").removeClass("app-invalid-field");
 			return null;
 		}
 	},
@@ -118,11 +119,13 @@ anxeb.vue.include.helper('tools', {
 		for (let i = 0; i < fields.length; i++) {
 			let field = fields[i];
 			let $name = field.name;
-			if (field.name.indexOf('.') > -1) {
+			let container = getContainer($name);
+
+			if (container.length === 0 && field.name.indexOf('.') > -1) {
 				$name = field.name.split('.').filter(item => isNaN(item)).join('.');
+				container = getContainer($name);
 			}
 
-			let container = getContainer($name);
 			container.addClass("app-invalid-field");
 			container.find(".app-field-custom-container").removeClass("app-focus-field");
 
