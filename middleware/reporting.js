@@ -264,7 +264,7 @@ module.exports = function (context, params) {
 			uri     : apiUri,
 			json    : true,
 			headers : {
-				Authorization : 'Bearer ' + _context.bearer.token
+				Authorization : 'Bearer ' + (params.token || _context.bearer.token)
 			}
 		});
 
@@ -315,6 +315,10 @@ module.exports = function (context, params) {
 		let fileName = params.name + '.pdf';
 		let reportFilePath = _context.service.locate.storage(_storagePath || 'reports', params.group || 'misc', fileName);
 		let attachmentName = encodeURIComponent(params.attachment ? (params.attachment + '.pdf') : fileName);
+
+		if (!anxeb.utils.file.exists(reportFilePath)) {
+			await _self.build(params);
+		}
 
 		_context.file(reportFilePath, {
 			headers : params.download ? {
