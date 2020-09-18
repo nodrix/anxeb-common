@@ -293,7 +293,16 @@ module.exports = function (context, params) {
 			helpers : helpers
 		});
 
-		let browser = await puppeteer.launch({ args : ['--no-sandbox'] });
+		let browser;
+		try {
+			browser = await puppeteer.launch({
+				args : ['--no-sandbox', '--disable-setuid-sandbox'],
+			});
+		} catch (err) {
+			_context.log.exception.inner_exception.args(err).throw(_context);
+			return null;
+		}
+
 		let page = await browser.newPage();
 		await page.setContent(html);
 		await page.pdf({ path : reportFilePath, format : params.format || 'Letter', printBackground : true });
