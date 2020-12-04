@@ -150,6 +150,10 @@
 	cursor: default !important;
 }
 
+.app-grid-row-disabled .app-grid-value {
+  opacity: 0.5;
+}
+
 .app-grid-icon-header {
 
 }

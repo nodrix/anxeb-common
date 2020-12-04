@@ -2,7 +2,7 @@
 
 anxeb.vue.include.component('panel', function (helpers) {
 	return {
-		props    : ['type', 'width', 'hide-footer', 'border', 'no-padding', 'color', 'over', 'icon', 'title', 'caption', 'offset', 'state', 'allow-collapse', 'max-width', 'min-width', 'label', 'hide-at', 'show-at'],
+		props    : ['type', 'width', 'hide-footer', 'border', 'no-padding', 'color', 'over', 'icon', 'title', 'caption', 'offset', 'state', 'allow-collapse', 'max-width', 'min-width', 'label', 'hide-at', 'show-at', 'collapse-icon'],
 		template : '/components/panel.vue',
 		methods  : {
 			updateScroll : function () {
@@ -25,6 +25,14 @@ anxeb.vue.include.component('panel', function (helpers) {
 				if (body[0] != null) {
 					var maxScroll = body[0].scrollHeight - body.outerHeight();
 					body.stop().animate({ scrollTop : maxScroll }, 500, 'swing', function () {
+
+					});
+				}
+			},
+			scrollUp     : function () {
+				let body = $(this.$refs.body);
+				if (body[0] != null) {
+					body.stop().animate({ scrollTop : 0 }, 500, 'swing', function () {
 
 					});
 				}

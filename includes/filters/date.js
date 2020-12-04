@@ -22,6 +22,10 @@ anxeb.vue.include.filter('date', function (value, params) {
 			return date.format('h:mm A');
 		} else if (params === 'full_time') {
 			return date.format('h:mm:ss A');
+		} else if (params === 'extended') {
+			return date.format('dddd D [de] MMMM [del] YYYY');
+		} else if (params === 'extended_wt') {
+			return date.format('dddd D [de] MMMM [del] YYYY h:mm a');
 		} else {
 			return date.format('D/M/YYYY');
 		}

@@ -2416,7 +2416,7 @@ form label {
 
 .md-form-group textarea {
   margin-bottom: -7px !important;
-  padding-left: 2px !important;
+  padding-left: 8px !important;
   padding-top: 5px !important;
   padding-bottom: 4px !important;
   padding-right: 10px !important;
@@ -2577,6 +2577,15 @@ form label {
 .modal .app-field-lookup-input {
   margin-top: 1px !important;
   height: 36px !important;
+}
+
+.modal .md-form-group textarea {
+  margin-bottom: -7px !important;
+  padding-left: 2px !important;
+  padding-top: 5px !important;
+  padding-bottom: 4px !important;
+  padding-right: 10px !important;
+  margin-top: 5px;
 }
 
 .app-report-container {

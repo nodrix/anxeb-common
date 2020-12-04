@@ -16,7 +16,7 @@ anxeb.vue.include.helper('tools', {
 		}
 	},
 	format        : {
-		number : function (value, params) {
+		number   : function (value, params) {
 			let decimalCount = params != null && params.decimals != null ? params.decimals : 2;
 			let thousandComma = params != null && params.comma != null ? params.comma : true;
 
@@ -31,7 +31,55 @@ anxeb.vue.include.helper('tools', {
 			}
 			return value
 		},
-		bytes  : function (value) {
+		duration : function (value) {
+			let date = typeof value === 'number' ? moment.unix(value) : value;
+
+			let $days = moment().diff(date, 'days');
+			let $hours = moment().diff(date, 'hours');
+			let $minutes = moment().diff(date, 'minutes');
+			let $seconds = moment().diff(date, 'seconds');
+
+			let sufix;
+
+			let isFuture = $seconds < 0;
+
+			if (isFuture) {
+				if (-$hours >= 24) {
+					value = -$days;
+					sufix = 'd';
+				} else if (-$minutes >= 60) {
+					value = -$hours;
+					sufix = 'h';
+				} else if (-$seconds >= 60) {
+					value = -$minutes;
+					sufix = 'm';
+				} else {
+					value = -$seconds;
+					sufix = 's';
+				}
+			} else {
+				if ($hours >= 24) {
+					value = $days;
+					sufix = 'd';
+				} else if ($minutes >= 60) {
+					value = $hours;
+					sufix = 'h';
+				} else if ($seconds >= 60) {
+					value = $minutes;
+					sufix = 'm';
+				} else {
+					value = $seconds;
+					sufix = 's';
+				}
+			}
+
+			if (isFuture) {
+				return this.number(value, { comma : true, decimals : 0 }) + sufix + ' res';
+			} else {
+				return this.number(value, { comma : true, decimals : 0 }) + sufix;
+			}
+		},
+		bytes    : function (value) {
 			let _format = this;
 			const ONE_KB = 1000;
 			const ONE_MB = 1000000;

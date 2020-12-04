@@ -58,7 +58,7 @@ anxeb.vue.include.component('top-tools', function (helpers) {
 		};
 
 		_self.available = function () {
-			return (!_self.role || _self.role.includes(helpers.root.profile.role)) && _self.visible !== false && (!_self.owners || _self.owners.includes(helpers.root.profile.type));
+			return (!_self.role || _self.role.includes(helpers.root.profile.roles)) && _self.visible !== false && (!_self.owners || _self.owners.includes(helpers.root.profile.type));
 		};
 
 		_self.key = params.key || null;

@@ -19,7 +19,7 @@
 						&nbsp;
 					</span>
 					<div class="pull-right" style="position: relative; top:-10px">
-						<i v-if="allowCollapse !== false" class="fas fa-times" v-on:click="actions.hide"></i>
+						<i v-if="allowCollapse !== false" class="fas" :class="[collapseIcon || 'fa-times']" v-on:click="actions.hide"></i>
 						<div v-if="isButtons && allowCollapse !== false" class="app-session-space"></div>
 						<slot v-if="isButtons" name="buttons" v-bind:actions="actions"></slot>
 					</div>
