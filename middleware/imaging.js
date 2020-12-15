@@ -1,6 +1,7 @@
 'use strict';
 
 const anxeb = require('anxeb-node');
+const sharp = require('sharp');
 
 module.exports = {
 	processFileRequest : async function (context, resource, options) {
@@ -56,7 +57,7 @@ module.exports = {
 					};
 				}
 
-				context.image(data, sharpOptions);
+				imageResponse(context, data, sharpOptions);
 			} else {
 				context.send({
 					content : data
@@ -89,5 +90,44 @@ module.exports = {
 		}
 
 		return routes;
+	}
+};
+
+const imageResponse = function (context, data, options) {
+	let img = data;
+
+	if (typeof data === 'string') {
+		if (data.startsWith('data:image/jpeg;base64')) {
+			data = data.replace(/^data:image\/jpeg;base64,/, '');
+			img = Buffer.from(data, 'base64');
+			context.res.type('jpeg');
+		} else if (data.startsWith('data:image/png;base64')) {
+			data = data.replace(/^data:image\/png;base64,/, '');
+			img = Buffer.from(data, 'base64');
+			context.res.type('png');
+		} else {
+			options = options || {};
+		}
+	}
+
+	if (options) {
+		var imageSharp = sharp(img);
+
+		for (var action in options) {
+			let pars = options[action];
+			if (pars === false) {
+				imageSharp = imageSharp[action]();
+			} else {
+				imageSharp = imageSharp[action](pars);
+			}
+		}
+
+		imageSharp.toBuffer().then(function (result) {
+			context.res.end(result);
+		}).catch(function (err) {
+			context.service.log.exception.invalid_image_data.args(err).throw(context);
+		});
+	} else {
+		context.res.end(img);
 	}
 };
