@@ -150,6 +150,7 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 				}
 				_self.branches = [];
 				_self.$emit('input', $value);
+				_self.$emit('changed', null);
 				_self.reset();
 			},
 			select       : async function (reference) {
@@ -177,6 +178,7 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 							$value = helpers.tools.data.copy(result);
 						}
 						_self.$emit('input', $value);
+						_self.$emit('changed', reference);
 						_self.canBrowse = false;
 					} else {
 						await _self.current.select(reference);
