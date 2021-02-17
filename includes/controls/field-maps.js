@@ -1,12 +1,11 @@
 'use strict';
 
 anxeb.vue.include.component('field-maps', function (helpers) {
-	let lock = false;
 
 	return {
 		template     : '/controls/field-maps.vue',
 		inheritAttrs : false,
-		props        : ['label', 'id', 'readonly', 'height', 'width', 'field-name', 'size', 'init-address', 'caption', 'value', 'maps'],
+		props        : ['label', 'id', 'readonly', 'height', 'width', 'field-name', 'size', 'init-address', 'caption', 'value', 'maps', 'address', 'zoom'],
 		created      : async function () {
 
 		},
@@ -14,7 +13,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 			let _self = this;
 			_self.name = _self.fieldName || (_self.$vnode.data.model != null ? _self.$vnode.data.model.expression : null);
 			_self.init();
-			if (!lock) {
+			if (!_self.lock) {
 				await _self.refresh();
 			}
 		},
@@ -45,8 +44,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 			},
 			refresh     : async function () {
 				let _self = this;
-
-				lock = true;
+				_self.lock = true;
 				if (_self.value == null) {
 					_self.geometry = _self.geometry || (await _self.getLocation(_self.initAddress || 'Dominican Republic'));
 					if (_self.location == null) {
@@ -55,7 +53,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 					}
 				} else {
 					_self.location = _self.value;
-					_self.map.setZoom(16);
+					_self.map.setZoom(_self.zoom || 16);
 				}
 
 				if (_self.marker == null) {
@@ -74,7 +72,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 
 				setTimeout(function () {
 					_self.updateMap();
-					lock = false;
+					_self.lock = false;
 				}, 200)
 
 			},
@@ -119,17 +117,48 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 						setTimeout(function () {
 							_self.map.panTo(_self.marker.getPosition());
 						}, 10);
-
 					}
 				}
 			}
 		},
 		watch        : {
 			location : function (value) {
-				if (!lock) {
+				if (!this.lock) {
 					this.$emit('input', value);
 					this.updateMap(value);
 				}
+			},
+			address  : async function (value) {
+				let _self = this;
+				if (!_self.lock) {
+					_self.lock = true;
+					_self.geometry = await _self.getLocation(value || 'Santo Domingo');
+
+					if (_self.geometry && _self.geometry.location) {
+						_self.map.fitBounds(_self.geometry.viewport);
+						_self.location = _self.geometry.location;
+
+						if (_self.marker == null) {
+							_self.marker = new _self.maps.Marker({
+								position  : _self.location,
+								map       : _self.map,
+								draggable : true,
+								title     : _self.caption
+							});
+
+							_self.marker.addListener('dragend', function () {
+								_self.location = _self.marker.getPosition();
+							})
+						} else {
+							_self.marker.setPosition(_self.location);
+							setTimeout(function () {
+								_self.map.panTo(_self.marker.getPosition());
+							}, 10);
+						}
+					}
+					_self.lock = false;
+				}
+
 			},
 			value    : function (value, old) {
 				this.refresh();
@@ -137,6 +166,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 		},
 		data         : function () {
 			return {
+				lock     : null,
 				name     : null,
 				marker   : null,
 				map      : null,

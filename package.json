@@ -1,6 +1,6 @@
 {
 	"name": "anxeb-common",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Anxeb frontend/backend middleware kit",
 	"main": "index.js",
 	"repository": {

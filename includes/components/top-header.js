@@ -31,7 +31,7 @@ anxeb.vue.include.component('top-header', function (helpers) {
 			},
 			actionCall       : function () {
 				if (this.action) {
-					this.action();
+					this.action(this);
 				}
 			},
 			toggleFullScreen : function (force) {
