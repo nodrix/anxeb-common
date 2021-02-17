@@ -58,7 +58,8 @@ anxeb.vue.include.component('top-tools', function (helpers) {
 		};
 
 		_self.available = function () {
-			return (!_self.role || _self.role.includes(helpers.root.profile.roles)) && _self.visible !== false && (!_self.owners || _self.owners.includes(helpers.root.profile.type));
+			let $roles = helpers.root.profile.roles && helpers.root.profile.roles instanceof Array ? helpers.root.profile.roles : (helpers.root.profile.role != null ? [helpers.root.profile.role] : null);
+			return (!_self.roles || !$roles || _self.roles.some((role) => $roles.includes(role))) && _self.visible !== false && (!_self.owners || _self.owners.includes(helpers.root.profile.type));
 		};
 
 		_self.key = params.key || null;
@@ -71,7 +72,7 @@ anxeb.vue.include.component('top-tools', function (helpers) {
 		_self.anchor = params.anchor || null;
 		_self.action = params.action || null;
 		_self.isActive = params.isActive || null;
-		_self.role = params.role || null;
+		_self.roles = params.roles || null;
 		_self.divider = params.divider || false;
 		_self.owners = params.owners || null;
 	};
@@ -97,7 +98,8 @@ anxeb.vue.include.component('top-tools', function (helpers) {
 		};
 
 		_self.available = function () {
-			return (!_self.role || _self.role.includes(helpers.root.profile.role)) && _self.visible !== false && (!_self.owners || _self.owners.includes(helpers.root.profile.type));
+			let $roles = helpers.root.profile.roles != null && helpers.root.profile.roles instanceof Array ? helpers.root.profile.roles : (helpers.root.profile.role != null ? [helpers.root.profile.role] : null);
+			return (!_self.roles || _self.roles.some((role) => $roles.includes(role))) && _self.visible !== false && (!_self.owners || _self.owners.includes(helpers.root.profile.type));
 		};
 
 		_self.key = params.key || null;
@@ -109,10 +111,11 @@ anxeb.vue.include.component('top-tools', function (helpers) {
 		_self.action = params.action || null;
 		_self.path = params.path || null;
 		_self.isActive = params.isActive || null;
-		_self.role = params.role || null;
+		_self.roles = params.roles || null;
 		_self.owners = params.owners || null;
 		_self.pages = [];
 		_self.type = params.type || null;
+
 
 		if (pages) {
 			for (let i = 0; i < pages.length; i++) {
