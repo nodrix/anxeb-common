@@ -3,8 +3,6 @@
 const anxeb = require('anxeb-node');
 const moment = anxeb.utils.moment;
 const puppeteer = require('puppeteer');
-const Barcode = require('jsbarcode');
-const { createCanvas } = require("canvas");
 
 const $isNull = function (value) {
 	if (value != null && typeof value === 'object') {
@@ -32,6 +30,7 @@ module.exports = function (context, params) {
 	let _context = context;
 	let _templatesPath = params.templates;
 	let _storagePath = params.storage;
+	let _scripts = params.scripts;
 
 	let _helpers = {
 		divide  : function (context, params, data) {
@@ -225,20 +224,6 @@ module.exports = function (context, params) {
 				return keys[key] || defaultValue;
 			};
 		},
-		barcode : function (context, params, data) {
-			return function (code, width, height, font, margin, showValue) {
-
-				let canvas = new createCanvas();
-				Barcode(canvas, code, {
-					height       : $default(height, 100),
-					fontSize     : $default(font, 62),
-					margin       : $default(margin, 4),
-					width        : $default(width, 9),
-					displayValue : $default(showValue, false)
-				});
-				return canvas.toDataURL('image/png');
-			};
-		},
 		file    : function (context, params, data) {
 			return function (path, id, name) {
 				let filePath = anxeb.utils.path.join(path, id, name != null && typeof name === 'string' ? name : 'logo.image');
@@ -304,6 +289,13 @@ module.exports = function (context, params) {
 		}
 
 		let page = await browser.newPage();
+
+		if (_scripts != null) {
+			for (let i = 0; i < _scripts.length; i++) {
+				await page.addScriptTag({ url : _scripts[i] });
+			}
+		}
+
 		await page.setContent(html);
 		await page.pdf({ path : reportFilePath, format : params.format || 'Letter', printBackground : true });
 		await browser.close();
