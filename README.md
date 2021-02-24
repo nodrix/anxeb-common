@@ -13,3 +13,4 @@
 
 - You can change packages scripts to customize vendors directory.
 - You can change root directory name before cloning submodule.
+- To pull changes use: `git submodule update --recursive --remote`
