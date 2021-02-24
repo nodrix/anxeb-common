@@ -5,10 +5,14 @@ anxeb.vue.include.component('field-image', function (helpers) {
 	return {
 		template     : '/controls/field-image.vue',
 		inheritAttrs : false,
-		props        : ['label', 'id', 'readonly', 'url', 'alt-url', 'height', 'width', 'field-name', 'size', 'can-preview'],
+		props        : ['label', 'id', 'readonly', 'url', 'alt-url', 'height', 'width', 'field-name', 'size', 'can-preview', 'drop-color', 'value'],
 		mounted      : function () {
 			let _self = this;
 			this.name = _self.fieldName || (_self.$vnode.data.model != null ? _self.$vnode.data.model.expression : null);
+
+			if (this.image == null && this.value != null && typeof this.value === 'string') {
+				_self.setupBlob(this.value);
+			}
 		},
 		data         : function () {
 			return {
@@ -17,19 +21,34 @@ anxeb.vue.include.component('field-image', function (helpers) {
 			}
 		},
 		methods      : {
-			reset   : function () {
+			setupBlob : function (data) {
+				let _self = this;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", data);
+				xhr.responseType = "blob";
+				xhr.onload = function (e) {
+					var urlCreator = window.URL || window.webkitURL;
+					var imageUrl = urlCreator.createObjectURL(this.response);
+					_self.image = {
+						data : data,
+						href : imageUrl
+					}
+				};
+				xhr.send();
+			},
+			reset     : function () {
 				let _self = this;
 				_self.image = null;
 				_self.$emit('input', null);
 			},
-			preview : function () {
+			preview   : function () {
 				let _self = this;
 
 				if (_self.canPreview === 'true' || _self.canPreview === true) {
 					window.open(_self.current_url, '_blank');
 				}
 			},
-			browse  : function () {
+			browse    : function () {
 				let _self = this;
 
 				helpers.browse.image().then(function (image) {
@@ -38,6 +57,16 @@ anxeb.vue.include.component('field-image', function (helpers) {
 				}).catch(function (err) {
 					_self.$parent.log('Error cargando imagen').exception();
 				});
+			}
+		},
+		watch        : {
+			value : function (value) {
+				let _self = this;
+				if (value == null) {
+					_self.reset();
+				} else if (_self.image == null && typeof value === 'string') {
+					_self.setupBlob(value);
+				}
 			}
 		},
 		computed     : {

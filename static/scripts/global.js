@@ -41,3 +41,18 @@ function enableTouch(e, el) {
 	e.stopPropagation();
 	return true;
 }
+
+String.prototype.toCamelCase = function() {
+	if (this == null){
+		return null;
+	}
+	if (this.length === 1){
+		return this.toUpperCase();
+	}
+	let result = this
+		.replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+		.replace(/\s/g, '')
+		.replace(/^(.)/, function($1) { return $1.toLowerCase(); });
+
+	return result[0].toUpperCase() + result.substr(1);
+}

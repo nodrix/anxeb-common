@@ -3,7 +3,9 @@
 anxeb.vue.include.service('log', function (helpers) {
 	let broadcastNotification = function (from, alert) {
 		from.$root.$broadcast('notifications', function (notifications) {
-			notifications.push(alert)
+			if (notifications.push) {
+				notifications.push(alert);
+			}
 		});
 	};
 

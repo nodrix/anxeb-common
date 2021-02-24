@@ -1,7 +1,7 @@
 'use strict';
 
 anxeb.vue.include.component('grid', {
-	props    : ['source', 'paging', 'filter', 'list-type', 'empty-options', 'show-paging', 'page-change', 'cpage', 'empty-offset'],
+	props    : ['source', 'paging', 'filter', 'list-type', 'empty-options', 'show-paging', 'page-change', 'cpage', 'empty-offset', 'paging-options'],
 	created  : function () {
 		this.$paging = this.paging || 7;
 		if (this.source != null) {

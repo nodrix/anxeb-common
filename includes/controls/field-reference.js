@@ -13,6 +13,8 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 		_self.references = null;
 		_self.selected = null;
 		_self.caption = params != null ? params.caption : null;
+		_self.mapping = (params != null ? params.mapping : null) || (_self.prev != null ? _self.prev.mapping : null);
+		_self.leaf = (params != null ? params.leaf : null) || (_self.prev != null ? _self.prev.leaf : null);
 
 		_self.init = async function () {
 			_self.reset();
@@ -65,7 +67,7 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 		template     : '/controls/field-reference.vue',
 		inheritAttrs : false,
 		inject       : ['page', 'log', 'modal'],
-		props        : ['label', 'id', 'readonly', 'type', 'value', 'direction', 'mode', 'root-model-name', 'mapping', 'root-caption', 'minimal', 'alt-fields'],
+		props        : ['label', 'id', 'readonly', 'type', 'value', 'direction', 'mode', 'root-model-name', 'mapping', 'root-caption', 'minimal', 'alt-fields', 'leaf-type'],
 		mounted      : function () {
 			let _self = this;
 			_self.name = _self.$vnode.data.model != null ? (_self.$vnode.data.model.expression) : null;
@@ -98,7 +100,7 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 				let _self = this;
 				_self.setBusy();
 				try {
-					_self.page = new ReferencesPage({ type : _self.type, caption : _self.rootCaption });
+					_self.page = new ReferencesPage({ type : _self.type, caption : _self.rootCaption, mapping : _self.mapping, leaf : _self.leafType });
 					_self.current = _self.page;
 					await _self.page.init();
 				} catch (err) {
@@ -157,28 +159,36 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 				let _self = this;
 				_self.setBusy(reference);
 				try {
-					if (reference.childs === 0) {
+					if (reference.childs === 0 || reference.type === _self.leafType) {
 						let $value = _self.value;
+
+						let changedValue = null;
 
 						if (_self.isSingle) {
 							$value = reference.id;
+							changedValue = reference;
 						} else if (_self.isMulti) {
 							$value = $value || [];
 							if (!$value.includes(reference.id)) {
 								$value.push(reference.id);
 							}
+							changedValue = reference;
 						} else if (_self.isLineage) {
 							let result = {};
+							let refers = {};
 							let $page = _self.page;
 							while ($page != null && $page.selected != null) {
 								result[_self.mapping[$page.selected.type]] = $page.selected.id;
+								refers[_self.mapping[$page.selected.type]] = $page.selected;
 								$page = $page.next;
 							}
 							result[_self.mapping[reference.type]] = reference.id;
+							refers[_self.mapping[reference.type]] = reference;
 							$value = helpers.tools.data.copy(result);
+							changedValue = helpers.tools.data.copy(refers);
 						}
 						_self.$emit('input', $value);
-						_self.$emit('changed', reference);
+						_self.$emit('changed', changedValue);
 						_self.canBrowse = false;
 					} else {
 						await _self.current.select(reference);
@@ -240,11 +250,9 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 
 				if (_self.page == null) {
 					await _self.refresh();
-					toggle();
-				} else {
-					await _self.refresh();//TODO REMOVE
-					toggle();
 				}
+
+				toggle();
 			},
 			getLineage   : function (params) {
 				let _self = this;

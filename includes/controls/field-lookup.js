@@ -5,7 +5,7 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 	return {
 		template     : '/controls/field-lookup.vue',
 		inheritAttrs : false,
-		props        : ['label', 'id', 'readonly', 'value', 'direction', 'source', 'binding', 'create-settings', 'preload'],
+		props        : ['label', 'id', 'readonly', 'value', 'direction', 'source', 'binding', 'create-settings', 'preload', 'allow-create'],
 		mounted      : function () {
 			let _self = this;
 			this.name = _self.$vnode.data.model != null ? (_self.$vnode.data.model.expression) : null;
@@ -22,11 +22,14 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 			});
 
 			_self.reset();
-			_self.updatePreview();
+			_self.updatePreview({
+				mounting : true
+			});
 		},
 		data         : function () {
 			return {
 				name          : null,
+				presearch     : null,
 				loaded        : false,
 				canBrowse     : false,
 				result        : null,
@@ -50,24 +53,44 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 			anyValue    : function () {
 				let _self = this;
 				return _self.value != null && _self.preview != null;
+			},
+			canCreate   : function () {
+				return this.allowCreate === 'true' || this.allowCreate === true;
 			}
 		},
 		methods      : {
-			updatePreview : function () {
+			createItem    : function () {
+				let _self = this;
+				if (_self.presearch && _self.presearch.length > 0) {
+					_self.$emit('create', _self.presearch);
+				}
+			},
+			updatePreview : function (params) {
 				let _self = this;
 				if (_self.source && _self.source.item && _self.value != null) {
-					_self.setBusy();
-					helpers.api.get(_self.source.item + '/' + _self.value).then(function (res) {
-						_self.preview = res.data;
+					if (typeof _self.value === 'string') {
+						_self.setBusy();
+						helpers.api.get(_self.source.item + '/' + _self.value).then(function (res) {
+							_self.preview = res.data;
+							_self.loaded = true;
+							if (!params || params.mounting !== true) {
+								_self.$emit('change', _self.preview);
+							}
+							_self.selected = null;
+							_self.setIdle();
+						}).catch(function (err) {
+							_self.setIdle();
+							_self.$root.log(err).exception();
+							_self.loaded = true;
+						});
+					} else {
+						_self.preview = _self.value;
 						_self.loaded = true;
-						_self.$emit('change', _self.preview);
+						if (!params || params.mounting !== true) {
+							_self.$emit('change', _self.preview);
+						}
 						_self.selected = null;
-						_self.setIdle();
-					}).catch(function (err) {
-						_self.setIdle();
-						_self.$root.log(err).exception();
-						_self.loaded = true;
-					});
+					}
 				} else {
 					_self.loaded = true;
 				}
@@ -121,7 +144,6 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 			},
 			searchChanged : function (event) {
 				let _self = this;
-
 				if (event.target.value != null && event.target.value.length > 0 && _self.search !== event.target.value) {
 					_self.search = event.target.value;
 
@@ -214,6 +236,8 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 					_self.$emit('input', _self.selected.id);
 					_self.preview = _self.selected;
 					this.reset();
+				} else if (_self.canCreate && _self.presearch && _self.presearch.length > 0) {
+					_self.$emit('create', _self.presearch);
 				} else {
 					this.reset();
 				}

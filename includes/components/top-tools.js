@@ -99,7 +99,7 @@ anxeb.vue.include.component('top-tools', function (helpers) {
 
 		_self.available = function () {
 			let $roles = helpers.root.profile.roles != null && helpers.root.profile.roles instanceof Array ? helpers.root.profile.roles : (helpers.root.profile.role != null ? [helpers.root.profile.role] : null);
-			return (!_self.roles || _self.roles.some((role) => $roles.includes(role))) && _self.visible !== false && (!_self.owners || _self.owners.includes(helpers.root.profile.type));
+			return (!_self.roles || !$roles || _self.roles.some((role) => $roles.includes(role))) && _self.visible !== false && (!_self.owners || _self.owners.includes(helpers.root.profile.type));
 		};
 
 		_self.key = params.key || null;

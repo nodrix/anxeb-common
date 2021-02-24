@@ -38,7 +38,7 @@
 				<notifications :floating="float" class="app-form-notification" ref="notifications"></notifications>
 			</div>
 
-			<div :class="{'modal-footer' : centered !== true, 'app-modal-buttons-centered' : centered === true, 'app-modal-buttons-bordeless' : header === false}">
+			<div v-if="buttonsLength > 0" :class="{'modal-footer' : centered !== true, 'app-modal-buttons-centered' : centered === true, 'app-modal-buttons-bordeless' : header === false}">
 				<button :style="{width: button.width}" v-for="button in buttons" :disabled="isBusy || (button.prompted ? (prompt.required !== false && (value == null || value.length === 0 || value === '')) : (button.disabled != null ? button.disabled : false))" class="btn btn" :class="button.class || 'primary'" type="button" @click="button.action()" v-if="button.visible !== false">
 					<i v-if="button.icon && !button.busy" class="fa" :class="button.icon"></i>
 					<i v-if="button.icon && button.busy" class="fa fa-circle-notch fa-spin"></i>

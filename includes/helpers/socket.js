@@ -200,7 +200,7 @@ anxeb.vue.include.helper('socket', function () {
 	return {
 		open : function (params, onErrorCallback) {
 			let token = localStorage.token;
-			let headers = {};
+			let headers = (params != null ? params.headers : {}) || {};
 			if (token) {
 				headers['Authorization'] = 'Bearer ' + token;
 			}
@@ -213,15 +213,17 @@ anxeb.vue.include.helper('socket', function () {
 				headers['client-key'] = params.key;
 			}
 
+			let transport = params.transport || 'polling';
+
 			let pipe = new io(_host + params.path, {
 				forceNew          : true,
 				query             : params ? params.query : undefined,
 				reconnect         : true,
 				reconnection      : true,
 				reconnectionDelay : 800,
-				timeout           : 8000,
+				timeout           : 2000,
 				autoConnect       : true,
-				transports        : ['polling'],
+				transports        : [transport],
 				transportOptions  : {
 					polling : { extraHeaders : headers }
 				}

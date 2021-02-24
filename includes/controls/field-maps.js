@@ -5,7 +5,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 	return {
 		template     : '/controls/field-maps.vue',
 		inheritAttrs : false,
-		props        : ['label', 'id', 'readonly', 'height', 'width', 'field-name', 'size', 'init-address', 'caption', 'value', 'maps', 'address', 'zoom'],
+		props        : ['label', 'id', 'readonly', 'height', 'width', 'field-name', 'size', 'init-address', 'caption', 'value', 'maps', 'address', 'zoom', 'options'],
 		created      : async function () {
 
 		},
@@ -24,7 +24,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 					disableDefaultUI : true,
 					scaleControl     : true,
 					zoomControl      : true,
-					scrollwheel      : false,
+					scrollwheel      : _self.options != null ? _self.options.scrolling === true : false,
 					mapTypeId        : _self.maps.MapTypeId.ROADMAP
 				});
 				_self.map.controls[_self.maps.ControlPosition.TOP_LEFT].push(_self.$refs.cbutton);
@@ -53,7 +53,6 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 					}
 				} else {
 					_self.location = _self.value;
-					_self.map.setZoom(_self.zoom || 16);
 				}
 
 				if (_self.marker == null) {
@@ -72,6 +71,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 
 				setTimeout(function () {
 					_self.updateMap();
+
 					_self.lock = false;
 				}, 200)
 
@@ -109,12 +109,19 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 			gotoMarker  : function () {
 				this.updateMap();
 			},
-			updateMap   : function (value) {
+			updateMap   : function (params) {
+				let value = params != null ? params.value : null;
 				let _self = this;
 				if (_self.marker && _self.map) {
 					if (value || _self.value) {
 						_self.marker.setPosition(value || _self.value);
 						setTimeout(function () {
+							if (_self.zoomed === false) {
+								_self.map.setZoom((_self.options != null ? _self.options.zoom : null) || 15);
+								_self.zoomed = true;
+							} else if (_self.options != null && _self.options.zoom != null) {
+								_self.map.setZoom(_self.options.zoom);
+							}
 							_self.map.panTo(_self.marker.getPosition());
 						}, 10);
 					}
@@ -125,7 +132,9 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 			location : function (value) {
 				if (!this.lock) {
 					this.$emit('input', value);
-					this.updateMap(value);
+					this.updateMap({
+						value : value
+					});
 				}
 			},
 			address  : async function (value) {
@@ -174,6 +183,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 				geometry : null,
 				geocoder : null,
 				loaded   : false,
+				zoomed   : false,
 			}
 		},
 

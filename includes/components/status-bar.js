@@ -2,7 +2,7 @@
 
 anxeb.vue.include.component('status-bar', function (helpers) {
 	return {
-		props    : ['app-name', 'app-version', 'type', 'state-text'],
+		props    : ['options', 'state-text'],
 		template : '/components/status-bar.vue',
 		methods  : {
 			setHint : function (item) {

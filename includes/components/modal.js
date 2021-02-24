@@ -226,8 +226,15 @@ anxeb.vue.include.component('modal', function (helpers) {
 			}
 		},
 		computed : {
-			promptLabel : function () {
+			promptLabel   : function () {
 				return typeof this.prompt === 'string' ? this.prompt : this.prompt.label;
+			},
+			buttonsLength : function () {
+				let count = 0;
+				for (var b in this.buttons) {
+					count++;
+				}
+				return count;
 			}
 		},
 		data     : function () {

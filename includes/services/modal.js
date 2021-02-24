@@ -4,16 +4,24 @@ anxeb.vue.include.service('modal', function (helpers) {
 
 	return function (component, params) {
 
-		let fetchModal = function (callback) {
-			helpers.root.$fetch('top-header').then(function (topHeader) {
-				helpers.root.$fetch('modal').then(function (modal) {
-					if (!modal.active) {
-						modal.reset();
-						modal.title = (typeof params === 'string' ? null : (params != null ? params.title : null)) || ((topHeader.caption || topHeader.title));
-						callback(modal);
-					}
-				}).catch(function () {});
-			}).catch(function () {});
+		let fetchModal = async function (callback) {
+			try {
+				let $title = (typeof params === 'string' ? null : (params != null ? params.title : null));
+				let modal = await helpers.root.$fetch('modal');
+
+				if ($title == null) {
+					let topHeader = await helpers.root.$fetch('top-header', 500);
+					$title = topHeader.caption || topHeader.title;
+				}
+
+				if (!modal.active) {
+					modal.reset();
+					modal.title = $title;
+					callback(modal);
+					return modal;
+				}
+			} catch (err) { }
+			return null;
 		};
 
 		return {
@@ -41,7 +49,7 @@ anxeb.vue.include.service('modal', function (helpers) {
 					}, 200);
 				});
 			},
-			failed : function (formParams) {
+			failed  : function (formParams) {
 				formParams.message = (typeof params === 'string' ? params : formParams.message) || null;
 				return new Promise(function (resolve, reject) {
 					setTimeout(function () {
@@ -111,7 +119,7 @@ anxeb.vue.include.service('modal', function (helpers) {
 				fetchModal(function (modal) {
 					modal.show({
 						message     : typeof params === 'string' ? params : params.message,
-						icon        : 'fa-info-circle',
+						icon        : (params && params !== 'string' && params.icon ? params.icon : null) || 'fa-info-circle',
 						onCancel    : callback,
 						dismissable : true
 					}, [{

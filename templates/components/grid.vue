@@ -38,7 +38,7 @@
 			</div>
 		</div>
 
-		<div class="app-grid-paging" v-if="showPaging == null || showPaging === true">
+		<div class="app-grid-paging" v-if="showPaging == null || showPaging === true" :style="{'display': pagingOptions != null && pagingOptions.center === true ? 'inline-flex' : null}">
 			<div class="app-grid-paging-box" v-if="rows.length">
 				<i class="fas fa-angle-double-left" v-on:click="first()" v-bind:class="{'app-grid-paging-btn-disabled' : page <= 0}"></i>
 				<i class="fas fa-angle-left" v-on:click="prev()" v-bind:class="{'app-grid-paging-btn-disabled' : page <= 0}"></i>

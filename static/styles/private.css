@@ -2134,6 +2134,11 @@ form label {
   top: -5px !important;*/
 }
 
+.modal .box .box-body .row:first-child .app-field-parent{
+  padding-top: 0!important;
+  margin-top: 0!important;
+}
+
 .modal .app-field-input-container .app-field-custom-container {
   margin-top: 3px;
 }
