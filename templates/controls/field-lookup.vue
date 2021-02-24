@@ -4,7 +4,7 @@
 
   <i v-if="!canBrowse && notReadOnly && anyValue" :class="{'app-disabled':busy.searching && busy.display}" class="pull-right fas app-field-custom-button fa-times" v-on:click="clear()" ref="browseButton"></i>
   <i v-if="!canBrowse && notReadOnly && !anyValue" :class="{'app-disabled':busy.searching && busy.display}" class="pull-right fas app-field-custom-button fa-search" v-on:click="browse()" ref="browseButton"></i>
-  <i style="position: absolute; right: 0px" v-if="canBrowse && notReadOnly && !anyValue && canCreate" :class="{'app-disabled':(busy.searching && busy.display) || presearch == null || presearch.length === 0}" class="fas app-field-custom-button fa-plus" v-on:click="createItem" ref="createButton"></i>
+  <i style="position: absolute; right: 0px" v-if="canBrowse && notReadOnly && canCreate" :class="{'app-disabled':(busy.searching && busy.display) || presearch == null || presearch.length === 0}" class="fas app-field-custom-button fa-plus" v-on:click="createItem" ref="createButton"></i>
 
   <div v-if="anyValue && !canBrowse" class="app-field-custom-container">
     <div class="app-field-custom-single pointer" v-on:click="browse()" v-if="notReadOnly">
@@ -35,7 +35,7 @@
   </div>
 
 
-  <div class="app-field-custom-browser app-field-lookup" :class="{'app-field-custom-browser-up' : direction === 'up'}" v-show="canBrowse && ((busy.searching && busy.display) || (result != null && result.length > 0) || (createSettings != null) || anyValue)" ref="box">
+  <div class="app-field-custom-browser app-field-lookup" :class="{'app-field-custom-browser-up' : direction === 'up'}" v-show="canBrowse && ((busy.searching && busy.display) || (result != null && result.length > 0) || (createSettings != null) )" ref="box">
     <div class="app-field-custom-top-label" v-if="direction === 'up'">
       ${label}
     </div>
@@ -84,9 +84,6 @@
       </div>
       <div class="app-field-custom-none" v-if="createSettings != null">
         <a class="app-label-link" v-on:click="addItem">${createSettings.label}</a>
-      </div>
-      <div class="app-field-custom-none" v-if="anyValue">
-        <a class="app-label-link" v-on:click="clear">Limpiar Selección</a>
       </div>
     </div>
   </div>

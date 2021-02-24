@@ -178,6 +178,7 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 				let _self = this;
 				_self.search = null;
 				_self.canBrowse = false;
+				_self.presearch = null;
 				_self.result = null;
 				$(_self.$refs.search).val('');
 			},
@@ -262,7 +263,10 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 			}
 		},
 		watch        : {
-			value : function (value) {
+			selected : function (value) {
+				this.presearch = null;
+			},
+			value    : function (value) {
 				if (value == null) {
 					this.clear();
 				}
