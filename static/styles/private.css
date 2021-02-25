@@ -1,5 +1,15 @@
 @import url(../vendors/font-roboto/index.css);
 
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  margin-right: -12px;
+  margin-left: -12px;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 body {
   font-family: sans-serif, "Roboto", "Helvetica Neue", Helvetica, Arial;
   margin: 0 !important;
@@ -1446,16 +1456,16 @@ button {
   border-left-width: 4px !important;
 }
 
-.app-facility-list-item {
+.app-client-list-item {
   cursor: pointer;
 }
 
-.app-facility-list-item:hover {
+.app-client-list-item:hover {
   cursor: pointer;
   background-color: #F0F0F0;
 }
 
-.app-facility-list-item-selected {
+.app-client-list-item-selected {
   background-color: #F0F0F0;
   border-left: solid 2px var(--app-background-color);
 }
@@ -2134,9 +2144,9 @@ form label {
   top: -5px !important;*/
 }
 
-.modal .box .box-body .row:first-child .app-field-parent{
-  padding-top: 0!important;
-  margin-top: 0!important;
+.modal .box .box-body .row:first-child .app-field-parent {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 .modal .app-field-input-container .app-field-custom-container {
