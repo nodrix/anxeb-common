@@ -111,6 +111,9 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 			},
 			browse        : function () {
 				let _self = this;
+				if (_self.busy.searching === true) {
+					return;
+				}
 
 				_self.reset();
 				_self.canBrowse = !_self.canBrowse;
@@ -130,6 +133,7 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 					_self.setBusy();
 
 					let lookupCopy = _self.search;
+
 					helpers.api.get(_self.source.list, { params : { lookup : lookupCopy } }).then(function (res) {
 						if (lookupCopy === _self.search) {
 							_self.result = res.data;
@@ -176,6 +180,9 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 			},
 			reset         : function () {
 				let _self = this;
+				if (_self.busy.searching === true) {
+					return;
+				}
 				_self.search = null;
 				_self.canBrowse = false;
 				_self.presearch = null;
