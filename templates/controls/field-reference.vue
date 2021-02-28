@@ -1,10 +1,10 @@
-<div v-bind="$attrs" class="app-field-parent">
+<div v-bind="$attrs" class="app-field-parent" ref="field">
 	<div v-if="readonly === 'true' || readonly === true" class="md-form-group app-field-input-container app-field-categories-container app-field-categoriescategories-readonly" :field-name="name" :alt-fields="altFields">
 		<input v-if="!(isSingle || isLineage)" class="md-input" style="display: none">
 		<input v-if="isSingle || isLineage" readonly="true" type="text" class="md-input" :value="caption">
 		<div v-else class="app-field-custom-container">
-			<div class="app-field-custom-chips">
-				<span v-for="branch in branches" class="app-chip"><i class="fas fa-times" v-on:click.stop="remove(branch)"></i>${branch.root.name} : ${branch.name}</span>
+			<div class="app-field-custom-chips" ref="chips">
+				<span v-for="branch in branches" class="app-chip" v-on:click.stop><i class="fas fa-times" v-on:click.stop="remove(branch)"></i>${branch.root.name} : ${branch.name}</span>
 			</div>
 		</div>
 		<label>${label}</label>
@@ -14,19 +14,19 @@
 		<i v-else class="pull-right fas app-field-custom-button" :class="[(isSingle || isLineage) ? 'fa-caret-down' : 'fa-plus']" v-on:click="browse()" ref="browseButton"></i>
 
 		<div v-if="anyValue" class="app-field-custom-container" style="cursor: pointer" v-on:click="browse()">
-			<div v-if="isSingle || isLineage" class="app-field-custom-single pointer no-wrap text-ellipsis" v-on:click="browse()" :title="caption">
+			<div v-if="isSingle || isLineage" class="app-field-custom-single pointer no-wrap text-ellipsis" v-on:click.stop="browse()" :title="caption">
 				${caption}
 			</div>
-			<div v-else-if="isMinimal" class="app-field-custom-chips">
-				<span v-for="branch in branches" class="app-chip"><i class="fas fa-times" v-on:click.stop="remove(branch)"></i>${branch.name}</span>
+			<div v-else-if="isMinimal" class="app-field-custom-chips" ref="chips">
+				<span v-for="branch in branches" class="app-chip" v-on:click.stop><i class="fas fa-times" v-on:click.stop="remove(branch)"></i>${branch.name}</span>
 			</div>
-			<div v-else class="app-field-custom-chips">
-				<span v-for="branch in branches" class="app-chip"><i class="fas fa-times" v-on:click.stop="remove(branch)"></i>${branch.root.name} : ${branch.name}</span>
+			<div v-else class="app-field-custom-chips" ref="chips">
+				<span v-for="branch in branches" class="app-chip" v-on:click.stop><i class="fas fa-times" v-on:click.stop="remove(branch)"></i>${branch.root.name} : ${branch.name}</span>
 			</div>
 		</div>
 
 		<div v-else class="app-field-custom-container">
-			<div class="app-field-custom-single pointer" v-on:click="browse()">
+			<div class="app-field-custom-single pointer" v-on:click.stop="browse()">
 				<span v-if="busy.fetching"><i class="fas fa-circle-notch fa-spin"></i><span>&nbsp;Buscando...</span></span>
 				<span v-else>- Seleccione -</span>
 			</div>
@@ -39,7 +39,7 @@
 				<i v-if="current.next != null" style="float: right; font-size: 14px; margin-right: 3px; padding:4px; cursor: pointer" class="fa fa-chevron-right" v-on:click="nextPage()"></i>
 			</div>
 			<div class="list white" style="overflow-y: auto; max-height: 230px; padding-top: 4px">
-				<div v-on:click="select(reference)" v-for="reference in current.references">
+				<div v-on:click.stop="select(reference, current)" v-for="reference in current.references">
 					<div class="no-border list-item b-l b-l-2x app-tenant-list-item app-field-reference-list-item" :class="{'app-field-reference-list-selected' : isSelected(reference.id)}">
 						<div class="list-body">
 							<div class="pull-left text-xs" style="font-size: 14px; margin-right: 5px; padding-top: 1px">

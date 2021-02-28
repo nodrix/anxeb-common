@@ -25,6 +25,15 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 			return _self.selected != null && _self.selected.id === id;
 		}
 
+		_self.unselect = function (reference) {
+			let refroot = reference && reference.root ? (reference.root.id ? reference.root.id : reference.root) : null;
+			if (_self.selected && (_self.selected.id === reference.id || _self.selected.id === refroot)) {
+				_self.selected = null;
+			} else if (_self.next != null) {
+				_self.next.unselect(reference);
+			}
+		}
+
 		_self.reset = function () {
 			_self.references = null;
 			_self.next = null;
@@ -73,9 +82,18 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 			_self.name = _self.$vnode.data.model != null ? (_self.$vnode.data.model.expression) : null;
 
 			$(document).bind('mouseup.' + _self.name, function (e) {
-				let box = $(_self.$refs.box);
+				/*let box = $(_self.$refs.box);
+				let chips = $(_self.$refs.chips);
 				let button = $(_self.$refs.browseButton);
-				if (button.is(e.target) || button.has(e.target).length > 0 || box.is(e.target) || box.has(e.target).length > 0) {
+				if (chips.has(e.target).length > 0 || button.is(e.target) || button.has(e.target).length > 0 || box.is(e.target) || box.has(e.target).length > 0) {
+					//nothig
+				} else {
+					console.log('out')
+					_self.reset();
+				}*/
+
+				let fieldContainer = $(_self.$refs.field);
+				if (fieldContainer.has(e.target).length > 0 || fieldContainer.is(e.target)) {
 					//nothig
 				} else {
 					_self.reset();
@@ -155,7 +173,7 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 				_self.$emit('changed', null);
 				_self.reset();
 			},
-			select       : async function (reference) {
+			select       : async function (reference, parent) {
 				let _self = this;
 				_self.setBusy(reference);
 				try {
@@ -167,12 +185,36 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 						if (_self.isSingle) {
 							$value = reference.id;
 							changedValue = reference;
+							_self.canBrowse = false;
 						} else if (_self.isMulti) {
 							$value = $value || [];
+
 							if (!$value.includes(reference.id)) {
 								$value.push(reference.id);
 							}
+
+							if (_self.isRoots && parent) {
+								let spliceRefs = parent.references.filter((item) => item.id !== reference.id).map((item) => item.id);
+								$value = $value.filter((id) => !spliceRefs.includes(id));
+							}
+
 							changedValue = reference;
+							let allRoots = _self.page.references.map((item) => item.id);
+
+							let selRoots = [];
+							for (let i = 0; i < _self.branches.length; i++) {
+								let branch = _self.branches[i];
+								if (!selRoots.includes(branch.root.id)) {
+									selRoots.push(branch.root.id);
+								}
+							}
+							if (reference && !selRoots.includes(reference.root)) {
+								selRoots.push(reference.root);
+							}
+
+							if (!_self.isRoots || selRoots.length === allRoots.length) {
+								_self.canBrowse = false;
+							}
 						} else if (_self.isLineage) {
 							let result = {};
 							let refers = {};
@@ -186,10 +228,13 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 							refers[_self.mapping[reference.type]] = reference;
 							$value = helpers.tools.data.copy(result);
 							changedValue = helpers.tools.data.copy(refers);
+							_self.canBrowse = false;
 						}
+
 						_self.$emit('input', $value);
 						_self.$emit('changed', changedValue);
-						_self.canBrowse = false;
+
+						_self.current = _self.page;
 					} else {
 						await _self.current.select(reference);
 						_self.current = _self.lastPage;
@@ -214,6 +259,10 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 						break;
 					}
 				}
+
+				if (_self.page) {
+					_self.page.unselect(branch);
+				}
 			},
 			reset        : function () {
 				this.canBrowse = false;
@@ -236,23 +285,15 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 			},
 			browse       : async function () {
 				let _self = this;
-
 				if (_self.busy.fetching) {
 					return;
 				}
-
-				let toggle = function () {
-					_self.canBrowse = !_self.canBrowse;
-					if (!_self.canBrowse) {
-						_self.reset();
-					}
-				};
 
 				if (_self.page == null) {
 					await _self.refresh();
 				}
 
-				toggle();
+				_self.canBrowse = !_self.canBrowse;
 			},
 			getLineage   : function (params) {
 				let _self = this;
@@ -284,7 +325,10 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 				return this.mode === 'lineage';
 			},
 			isMulti          : function () {
-				return this.mode === 'multi';
+				return this.mode === 'multi' || this.isRoots;
+			},
+			isRoots          : function () {
+				return this.mode === 'roots';
 			},
 			isMinimal        : function () {
 				return this.minimal === 'true' || this.minimal === true;
