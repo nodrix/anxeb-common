@@ -154,24 +154,24 @@ anxeb.vue.include.helper('tools', {
 		$("form .app-invalid-field").removeClass("app-invalid-field");
 		err.$highlighted = true;
 
-		let prefix = (params && params.prefix ? params.prefix : 'model');
+		let defaultPrefix = (params && params.prefix ? params.prefix : 'model');
 		let fields = err.meta && err.meta.fields ? err.meta.fields : (err.inner && err.inner.meta && err.inner.meta.fields ? err.inner.meta.fields : []);
 
 		let inx = null;
 		let focusField = null;
 
-		let getContainer = function (field) {
+		let getContainer = function (field, prefix) {
 			return $("[field-name='" + prefix + "." + field + "'],[alt-fields*='" + prefix + "." + field + "']")
 		};
 
 		for (let i = 0; i < fields.length; i++) {
 			let field = fields[i];
 			let $name = field.name;
-			let container = getContainer($name);
+			let container = getContainer($name, field.prefix || defaultPrefix);
 
 			if (container.length === 0 && field.name.indexOf('.') > -1) {
 				$name = field.name.split('.').filter(item => isNaN(item)).join('.');
-				container = getContainer($name);
+				container = getContainer($name, field.prefix || defaultPrefix);
 			}
 
 			container.addClass("app-invalid-field");
@@ -186,7 +186,7 @@ anxeb.vue.include.helper('tools', {
 		}
 
 		if (focusField) {
-			let fieldContainer = getContainer(focusField);
+			let fieldContainer = getContainer(focusField, defaultPrefix);
 			fieldContainer.find("input").focus();
 			fieldContainer.find("select").focus();
 			fieldContainer.find("textarea").focus();

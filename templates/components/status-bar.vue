@@ -4,7 +4,9 @@
     <span v-if="$slots.caption !== null"><slot name="caption"></slot></span>
     <span class="hidden-xs-down" v-if="$slots.build !== null">&nbsp;-&nbsp;<slot name="build"></slot></span>
   </div>
-  <div class="nav" v-html="finalHint">
+  <div v-if="hint != null" class="nav" v-html="hint"></div>
+  <div v-else-if="$slots.state != null" class="nav">
+    <slot name="state"></slot>
   </div>
 </div>
 </div>
