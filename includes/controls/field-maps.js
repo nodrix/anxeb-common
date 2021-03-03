@@ -21,26 +21,32 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 			init        : function () {
 				let _self = this;
 				_self.map = new _self.maps.Map(_self.$refs.container, {
+					scaleControl     : !_self.isReadonly,
+					draggable        : !_self.isReadonly,
 					disableDefaultUI : true,
-					scaleControl     : true,
-					zoomControl      : true,
-					scrollwheel      : _self.options != null ? _self.options.scrolling === true : false,
+					zoomControl      : !_self.isReadonly,
+					scrollwheel      : _self.isReadonly ? false : (_self.options != null ? _self.options.scrolling === true : false),
 					mapTypeId        : _self.maps.MapTypeId.ROADMAP
 				});
-				_self.map.controls[_self.maps.ControlPosition.TOP_LEFT].push(_self.$refs.cbutton);
-				_self.map.addListener('center_changed', function () {
 
-				});
-				_self.map.addListener('tilesloaded', function () {
-					if (!_self.loaded) {
-						setTimeout(function () {
-							_self.loaded = true;
-						}, 500);
-					}
-				});
-				_self.map.addListener('click', function (mapsMouseEvent) {
-					_self.location = mapsMouseEvent.latLng;
-				});
+				if (!_self.isReadonly) {
+					_self.map.controls[_self.maps.ControlPosition.TOP_LEFT].push(_self.$refs.cbutton);
+
+					_self.map.addListener('center_changed', function () {
+
+					});
+
+					_self.map.addListener('tilesloaded', function () {
+						if (!_self.loaded) {
+							setTimeout(function () {
+								_self.loaded = true;
+							}, 500);
+						}
+					});
+					_self.map.addListener('click', function (mapsMouseEvent) {
+						_self.location = mapsMouseEvent.latLng;
+					});
+				}
 			},
 			refresh     : async function () {
 				let _self = this;
@@ -59,7 +65,7 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 					_self.marker = new _self.maps.Marker({
 						position  : _self.location,
 						map       : _self.map,
-						draggable : true,
+						draggable : !_self.isReadonly,
 						title     : _self.caption
 					});
 
@@ -171,6 +177,11 @@ anxeb.vue.include.component('field-maps', function (helpers) {
 			},
 			value    : function (value, old) {
 				this.refresh();
+			}
+		},
+		computed     : {
+			isReadonly : function () {
+				return this.readonly === true || this.readonly === 'true';
 			}
 		},
 		data         : function () {

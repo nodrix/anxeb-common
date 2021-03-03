@@ -4,7 +4,7 @@
 		<input v-if="isSingle || isLineage" readonly="true" type="text" class="md-input" :value="caption">
 		<div v-else class="app-field-custom-container">
 			<div class="app-field-custom-chips" ref="chips">
-				<span v-for="branch in branches" class="app-chip" v-on:click.stop><i class="fas fa-times" v-on:click.stop="remove(branch)"></i>${branch.root.name} : ${branch.name}</span>
+				<span v-for="branch in branches" class="app-chip" v-on:click.stop>${branch.root.name} : ${branch.name}</span>
 			</div>
 		</div>
 		<label>${label}</label>

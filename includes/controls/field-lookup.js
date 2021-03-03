@@ -5,7 +5,7 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 	return {
 		template     : '/controls/field-lookup.vue',
 		inheritAttrs : false,
-		props        : ['label', 'id', 'readonly', 'value', 'direction', 'source', 'binding', 'create-settings', 'preload', 'allow-create'],
+		props        : ['label', 'id', 'readonly', 'value', 'direction', 'source', 'binding', 'create-settings', 'preload', 'allow-create', 'default-text'],
 		mounted      : function () {
 			let _self = this;
 			this.name = _self.$vnode.data.model != null ? (_self.$vnode.data.model.expression) : null;

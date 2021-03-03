@@ -1,8 +1,6 @@
 'use strict';
 
 anxeb.vue.include.component('field-reference', function (helpers) {
-
-
 	let ReferencesPage = function (params) {
 		let _self = this;
 		_self.next = null;
@@ -82,16 +80,6 @@ anxeb.vue.include.component('field-reference', function (helpers) {
 			_self.name = _self.$vnode.data.model != null ? (_self.$vnode.data.model.expression) : null;
 
 			$(document).bind('mouseup.' + _self.name, function (e) {
-				/*let box = $(_self.$refs.box);
-				let chips = $(_self.$refs.chips);
-				let button = $(_self.$refs.browseButton);
-				if (chips.has(e.target).length > 0 || button.is(e.target) || button.has(e.target).length > 0 || box.is(e.target) || box.has(e.target).length > 0) {
-					//nothig
-				} else {
-					console.log('out')
-					_self.reset();
-				}*/
-
 				let fieldContainer = $(_self.$refs.field);
 				if (fieldContainer.has(e.target).length > 0 || fieldContainer.is(e.target)) {
 					//nothig

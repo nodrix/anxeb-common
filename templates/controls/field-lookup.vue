@@ -30,7 +30,7 @@
       <span><i class="fas fa-circle-notch fa-spin"></i><span>&nbsp;Buscando...</span></span>
     </div>
     <div v-else class="app-field-custom-single pointer" v-on:click="browse()">
-      <span v-if="loaded && notReadOnly">- Buscar -</span>
+      <span v-if="loaded && notReadOnly">${defaultText != null ? defaultText : '- Buscar -'}</span>
     </div>
   </div>
 
