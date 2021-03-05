@@ -12,18 +12,27 @@ anxeb.vue.include.component('field-image', function (helpers) {
 
 			if (this.image == null && this.value != null && typeof this.value === 'string') {
 				_self.setupBlob(this.value);
-			}
-		},
-		data         : function () {
-			return {
-				name  : null,
-				image : null
+			} else {
+				_self.checkImage();
 			}
 		},
 		methods      : {
-			setupBlob : function (data) {
+			checkImage : function (e) {
+				let _self = this;
+				_self.state = 'loading';
+				const img = new Image();
+				img.src = _self.current_url;
+				img.onerror = function (err) {
+					_self.state = 'error';
+				}
+				img.onloadend = function (err) {
+					_self.state = 'loaded';
+				}
+			},
+			setupBlob  : function (data) {
 				let _self = this;
 				var xhr = new XMLHttpRequest();
+				_self.state = 'loading';
 				xhr.open("GET", data);
 				xhr.responseType = "blob";
 				xhr.onload = function (e) {
@@ -33,22 +42,26 @@ anxeb.vue.include.component('field-image', function (helpers) {
 						data : data,
 						href : imageUrl
 					}
+					_self.state = 'loaded';
 				};
+				xhr.onerror = function (e) {
+					_self.state = 'error';
+				}
 				xhr.send();
 			},
-			reset     : function () {
+			reset      : function () {
 				let _self = this;
 				_self.image = null;
 				_self.$emit('input', null);
 			},
-			preview   : function () {
+			preview    : function () {
 				let _self = this;
 
 				if (_self.canPreview === 'true' || _self.canPreview === true) {
 					window.open(_self.current_url, '_blank');
 				}
 			},
-			browse    : function () {
+			browse     : function () {
 				let _self = this;
 
 				helpers.browse.image().then(function (image) {
@@ -57,7 +70,7 @@ anxeb.vue.include.component('field-image', function (helpers) {
 				}).catch(function (err) {
 					_self.$parent.log('Error cargando imagen').exception();
 				});
-			}
+			},
 		},
 		watch        : {
 			value : function (value) {
@@ -66,6 +79,8 @@ anxeb.vue.include.component('field-image', function (helpers) {
 					_self.reset();
 				} else if (_self.image == null && typeof value === 'string') {
 					_self.setupBlob(value);
+				} else {
+					_self.checkImage();
 				}
 			}
 		},
@@ -102,6 +117,13 @@ anxeb.vue.include.component('field-image', function (helpers) {
 					}
 				}
 			}
-		}
+		},
+		data         : function () {
+			return {
+				state : null,
+				name  : null,
+				image : null
+			}
+		},
 	};
 });
