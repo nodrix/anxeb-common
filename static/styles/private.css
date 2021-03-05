@@ -3125,6 +3125,10 @@ form label {
   color: var(--app-background-color);
 }
 
+.app-actions-button ._actions ._divisor:not(:first-child) {
+  border-top: solid 1px #E3E3E3;
+}
+
 .app-actions-button a {
   padding-left: 14px;
   padding-right: 14px;
