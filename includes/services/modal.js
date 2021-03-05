@@ -194,19 +194,19 @@ anxeb.vue.include.service('modal', function (helpers) {
 				fetchModal(function (modal) {
 					modal.show({
 						message     : typeof params === 'string' ? params : params.message,
-						icon        : params.icon || 'fa-information-circle',
+						icon        : params.icon || 'fa-info-circle',
 						prompt      : params.prompt,
 						buttons     : params.buttons,
 						onCancel    : modal.close,
 						dismissable : true
 					}, [{
-						text     : 'Aceptar',
+						text     : (params && params.labels ? params.labels.accept : null) || 'Aceptar',
 						key      : 'ACCEPT',
 						prompted : params.prompt != null,
 						close    : true,
 						action   : callback
 					}, {
-						text  : 'Cancelar',
+						text  : (params && params.labels ? params.labels.cancel : null) || 'Cancelar',
 						key   : 'CANCEL',
 						close : true
 					}]);
