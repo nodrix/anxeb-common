@@ -1,7 +1,7 @@
 
 .app-category-node ._container {
   padding: 5px 15px 5px 15px;
-  color: var(--app-background-dark);
+  color: #1E1E1E;
   font-size: 15px;
   cursor: pointer;
   border-radius: 20px;
