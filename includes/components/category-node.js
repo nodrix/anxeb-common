@@ -12,10 +12,10 @@ anxeb.vue.include.component('category-node', function (helpers) {
 		updated() {
 			this.prepare();
 		},
-		created      : function () {
+		created  : function () {
 			this.normalizeSelection();
 		},
-		methods      : {
+		methods  : {
 			expand             : async function (lineage) {
 				let _self = this;
 				await _self.toggle(true);
@@ -82,13 +82,15 @@ anxeb.vue.include.component('category-node', function (helpers) {
 				_self.item.update = _self.selfUpdate;
 				_self.item.update(data);
 			},
-			selfUpdate         : function (values) {
+			selfUpdate         : function (data) {
 				let _self = this;
-				if (values) {
-					for (let k in values) {
-						if (_self.item[k] != null) {
-							_self.item[k] = values[k];
+				if (data) {
+					let params = JSON.parse(JSON.stringify(data));
+					if (params) {
+						for (let p in params) {
+							_self.item[p] = params[p];
 						}
+						_self.$forceUpdate();
 					}
 				}
 			},
@@ -109,7 +111,7 @@ anxeb.vue.include.component('category-node', function (helpers) {
 						_self.items = _self.prepareList(res.data);
 					}
 
-					if (params && params.full) {
+					if (!params || params.full) {
 						let res = await helpers.api.get(_self.api, { params : { lineage : _self.item.id } });
 						_self.prepare(res.data);
 					}
@@ -134,14 +136,14 @@ anxeb.vue.include.component('category-node', function (helpers) {
 				}
 			}
 		},
-		watch        : {
+		watch    : {
 			'controller.selected' : function (item) {
 				if (this.item.$deleted !== true) {
 					this.normalizeSelection();
 				}
 			}
 		},
-		computed     : {
+		computed : {
 			levelWidth  : function () {
 				let total = (this.level || 0) * (this.offset || 15);
 				return `${total}px`;
@@ -150,7 +152,7 @@ anxeb.vue.include.component('category-node', function (helpers) {
 				return this.controller || this.defaultController;
 			}
 		},
-		data         : function () {
+		data     : function () {
 			let _self = this;
 			return {
 				expanded : false,
