@@ -1,0 +1,95 @@
+
+.app-category-node ._container {
+  padding: 5px 15px 5px 15px;
+  color: var(--app-background-dark);
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-bottom: 1px;
+  margin-top: 1px;
+}
+
+.app-category-node ._selected {
+  background-color: var(--app-active-color) !important;
+}
+
+.app-category-node ._container:hover {
+  background-color: #F0F0F0;
+}
+
+.app-category-node ._sub-nodes-container {
+
+}
+
+.app-category-node ._container ._title {
+  padding-left: 5px;
+  line-height: 0 !important;
+}
+
+.app-category-node ._container ._edit {
+  font-size: 12px;
+  line-height: 0 !important;
+}
+
+.app-category-node ._container ._zero {
+  opacity: 0.4;
+}
+
+.app-category-node ._container ._actions button {
+  position: relative;
+  top:8px;
+  font-size: 12px!important;
+}
+
+.app-category-node ._container ._count:hover {
+  background-color: var(--app-background-color);
+  color: white;
+}
+
+.app-category-node ._container ._count {
+  margin-left: 4px;
+  min-width: 30px;
+  display: inline-block;
+  font-size: 10px;
+  background-color: white;
+  position: relative;
+  text-align: center;
+  top: -2px;
+  line-height: 1;
+  padding-top: 2px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 3px;
+  border-radius: 4px;
+}
+
+.app-category-node ._container ._icon:hover {
+  color: var(--app-background-color);
+}
+
+.app-category-node ._container ._icon {
+  font-size: 14px;
+  width: 8px;
+  display: inline-block;
+  line-height: 1 !important;
+}
+
+.app-category-node ._container ._busy-icon {
+  position: relative;
+  top: -1px;
+  left: -5px;
+}
+
+.app-category-node ._container ._expanded-icon {
+  position: relative;
+  top: -1px;
+  left: -2px;
+}
+
+.app-category-node ._container ._collapsed-icon {
+
+}
+
+.app-category-node ._container ._empty-icon {
+  opacity: 0.2;
+}
