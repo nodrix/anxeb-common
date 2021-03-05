@@ -4,7 +4,7 @@
 			<span class="fas" :class="emptyOptions.icon != null ? [emptyOptions.icon] : ['fa-exclamation-circle']"></span>
 		</div>
 		<div class="message">
-			<div :style="{'margin-top' : emptyOptions.caption ? '' : '11px'}" class="text">${emptyOptions.label || 'Tabla sin Registros'}</div>
+			<div :style="{'margin-top' : emptyOptions.caption ? '' : '11px'}" class="text" v-html="emptyOptions.label || 'Tabla sin Registros'"></div>
 			<a v-if="emptyOptions.caption" v-on:click="emptyOptions.action()">${emptyOptions.caption}</a>
 		</div>
 
