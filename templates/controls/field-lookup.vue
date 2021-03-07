@@ -36,10 +36,6 @@
 
 
   <div class="app-field-custom-browser app-field-lookup" :class="{'app-field-custom-browser-up' : direction === 'up'}" v-show="canBrowse && ((busy.searching && busy.display) || (result != null && result.length > 0) || (createSettings != null) )" ref="box">
-    <div class="app-field-custom-top-label" v-if="direction === 'up'">
-      ${label}
-    </div>
-
     <div class="list white">
       <div v-if="busy.searching && busy.display" class="app-field-lookup-busy">
         <i class="fas fa-circle-notch fa-spin"></i><span>&nbsp;Buscando...</span>

@@ -19,6 +19,10 @@ anxeb.vue.include.component('field-image', function (helpers) {
 		methods      : {
 			checkImage : function (e) {
 				let _self = this;
+				if (!_self.current_url) {
+					_self.state = 'error';
+					return;
+				}
 				_self.state = 'loading';
 				const img = new Image();
 				img.src = _self.current_url;

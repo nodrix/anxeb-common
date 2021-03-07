@@ -3,7 +3,6 @@
 anxeb.vue.include.directive('focus', {
 	bind     : function (el, directive) {
 		if (directive.value === undefined || directive.value === true) {
-
 			el.focus();
 			setTimeout(function () {
 				el.select();
