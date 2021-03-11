@@ -17,32 +17,48 @@ anxeb.vue.include.service('page', function (helpers) {
 	};
 
 	_self.menu = {
+		remove : function (key) {
+			setTimeout(function () {
+				helpers.root.$fetch('top-menu').then(function (topMenu) {
+					topMenu.remove(key);
+					topMenu.refresh();
+				}).catch(function () {});
+			}, 0);
+		},
 		add    : function (group, pages) {
-			helpers.root.$fetch('top-menu').then(function (topMenu) {
-				topMenu.add(group, pages);
-				topMenu.refresh();
-			}).catch(function () {});
+			setTimeout(function () {
+				helpers.root.$fetch('top-menu').then(function (topMenu) {
+					topMenu.add(group, pages);
+					topMenu.refresh();
+				}).catch(function () {});
+			}, 0);
 		},
 		clear  : function () {
-			helpers.root.$fetch('top-menu').then(function (topMenu) {
-				topMenu.clear();
-			}).catch(function () {});
+			setTimeout(function () {
+				helpers.root.$fetch('top-menu').then(function (topMenu) {
+					topMenu.clear();
+				}).catch(function () {});
+			}, 0);
 		},
 		append : function (groupKey, page) {
-			helpers.root.$fetch('top-menu').then(function (topMenu) {
-				let group = topMenu.append(groupKey, page);
-				if (group && callback) {
-					callback(group);
-				}
-			}).catch(function () {});
+			setTimeout(function () {
+				helpers.root.$fetch('top-menu').then(function (topMenu) {
+					let group = topMenu.append(groupKey, page);
+					if (group && callback) {
+						callback(group);
+					}
+				}).catch(function () {});
+			}, 0);
 		},
 		update : function (key, callback) {
-			helpers.root.$fetch('top-menu').then(function (topMenu) {
-				let group = topMenu.getGroup(key);
-				if (group && callback) {
-					callback(group);
-				}
-			}).catch(function () {});
+			setTimeout(function () {
+				helpers.root.$fetch('top-menu').then(function (topMenu) {
+					let group = topMenu.getGroup(key);
+					if (group && callback) {
+						callback(group);
+					}
+				}).catch(function () {});
+			}, 0);
 		}
 	};
 

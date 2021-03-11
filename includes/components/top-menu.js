@@ -80,6 +80,7 @@ anxeb.vue.include.component('top-menu', function (helpers) {
 			_self.isDisabled = params.isDisabled || null;
 			_self.isVisible = params.isVisible || null;
 			_self.role = params.role || null;
+			_self.divider = params.divider || false;
 			_self.options = params.options || null;
 			_self.index = params.index || null;
 			_self.mobile = params.mobile != null ? params.mobile : null;
@@ -188,6 +189,11 @@ anxeb.vue.include.component('top-menu', function (helpers) {
 
 				return group;
 			},
+			remove   : function (groupkey) {
+				this.groups = this.groups.filter(function (item) {
+					return item.key !== groupkey;
+				});
+			},
 			add      : function (groupParams, pages) {
 				let group = null;
 
@@ -203,7 +209,11 @@ anxeb.vue.include.component('top-menu', function (helpers) {
 
 				if (group == null) {
 					group = new Group(groupParams, pages);
-					this.groups.push(group);
+					if (groupParams.shift) {
+						this.groups.unshift(group);
+					} else {
+						this.groups.push(group);
+					}
 				} else {
 					group.update(groupParams, pages);
 				}
