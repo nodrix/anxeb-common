@@ -121,6 +121,12 @@ html {
   border: none;
 }
 
+.hidden-scroller::-webkit-scrollbar {
+  width: 0px;
+  height: 4px;
+  border: none;
+}
+
 ::-webkit-scrollbar-thumb {
   border-radius: 0px;
   border: none;
@@ -404,6 +410,20 @@ html {
   width: 28px;
 }
 
+.app-panel-form-container {
+  padding-top: 17px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.app-panel-form-container > :first-child {
+  padding-top: 0px !important;
+}
+
+.app-panel-form-container .app-session {
+  padding-bottom: 14px;
+}
+
 .app-page-form {
   padding-top: 10px;
   padding-bottom: 14px;
@@ -537,6 +557,12 @@ html {
   width: 42px;
   height: 42px;
 }
+
+.app-menu-divider {
+  padding-right: 20px !important;
+  border-right: solid 1px #c0c0c0 !important;
+}
+
 
 .app-menu-active {
   color: var(--app-background-color) !important;
@@ -994,16 +1020,23 @@ button[disabled] {
 
 .fade-enter, .fade-leave-to {
   opacity: 0;
+
+}
+
+.app-panel-container-table .app-panel-content-body ._more-icon i {
+  margin: auto;
 }
 
 .app-panel-container-table .app-panel-content-body ._more-icon {
-  float: end;
-  position: relative;
-  top: -70px;
+  float: right;
+  width: 40px;
   height: 40px;
-  z-index: 15000;
-  text-align: right;
-  padding-right: 20px;
+  display: flex;
+  text-align: center;
+  position: relative;
+  bottom: 50px;
+  right: 10px;
+  z-index: 9000;
   font-size: 40px;
   color: var(--app-background-color) !important;
 }
@@ -1380,6 +1413,58 @@ button {
   border-bottom: solid 1px #f0f0f0 !important;
 }
 
+.app-tenant-list-item .app-list-item-icon {
+  width: 44px !important;
+  position: relative;
+  left: -4px;
+  padding-right: 0 !important;
+  padding-top: 0 !important;
+}
+
+.app-tenant-list-item ._alert {
+  position: absolute;
+}
+
+.app-tenant-list-item ._alert div i {
+  line-height: 1;
+  margin: auto;
+  color: white;
+}
+
+.app-tenant-list-item ._alert div {
+  position: relative;
+  left: 25px;
+  font-size: 9px;
+  padding: 0 !important;
+  display: flex;
+  width: 19px;
+  height: 19px;
+  border: solid 2px #FFFFFF;
+  border-radius: 20px;
+}
+
+.app-tenant-list-item-selected ._alert div {
+  border: solid 2px #F0F0F0;
+}
+
+.app-tenant-list-item ._notification {
+  position: absolute;
+}
+
+.app-tenant-list-item ._notification span {
+  font-weight: bold;
+  font-size: 10px;
+  padding-top: 2px !important;
+  padding-bottom: 3px !important;
+  padding-left: 5px !important;
+  padding-right: 4px !important;
+  border: solid 2px #FFFFFF;
+}
+
+.app-tenant-list-item-selected ._notification span {
+  border: solid 2px #F0F0F0;
+}
+
 .app-tenant-list-item:hover {
   cursor: pointer;
   background-color: #F0F0F0;
@@ -1452,8 +1537,13 @@ button {
 
 .app-tenant-list-item-selected {
   background-color: #f0f0f0;
-  border-left: solid 2px var(--app-background-color);
+  color: var(--app-background-dark);
+  border-left: solid 2px var(--app-background-color) !important;
   border-left-width: 4px !important;
+}
+
+.app-tenant-list-item-selected .app-list-item-icon {
+  color: var(--app-link-color);
 }
 
 .app-client-list-item {
