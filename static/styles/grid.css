@@ -291,7 +291,8 @@
 	font-size: 1em;
 	background-color: transparent !important;
 	border: none !important;
-	margin-left: 11px !important;
+  	margin-left: 11px !important;
+  	display: inline-block;
 	color: #009eb9;
 }
 
