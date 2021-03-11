@@ -2,7 +2,7 @@
 
 anxeb.vue.include.component('panel', function (helpers) {
 	return {
-		props    : ['type', 'width', 'hide-footer', 'border', 'no-padding', 'color', 'over', 'icon', 'title', 'caption', 'offset', 'state', 'allow-collapse', 'max-width', 'min-width', 'label', 'hide-at', 'show-at', 'collapse-icon'],
+		props    : ['type', 'width', 'hide-footer', 'border', 'no-padding', 'no-scrollbar', 'color', 'over', 'icon', 'title', 'caption', 'offset', 'state', 'allow-collapse', 'max-width', 'min-width', 'label', 'hide-at', 'show-at', 'collapse-icon'],
 		template : '/components/panel.vue',
 		methods  : {
 			updateScroll : function () {
