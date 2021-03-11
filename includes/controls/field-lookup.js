@@ -75,6 +75,8 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 							_self.loaded = true;
 							if (!params || params.mounting !== true) {
 								_self.$emit('change', _self.preview);
+							} else {
+								_self.$emit('load', _self.preview);
 							}
 							_self.selected = null;
 							_self.setIdle();
@@ -88,6 +90,8 @@ anxeb.vue.include.component('field-lookup', function (helpers) {
 						_self.loaded = true;
 						if (!params || params.mounting !== true) {
 							_self.$emit('change', _self.preview);
+						} else {
+							_self.$emit('load', _self.preview);
 						}
 						_self.selected = null;
 					}
