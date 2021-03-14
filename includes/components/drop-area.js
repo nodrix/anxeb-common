@@ -2,7 +2,7 @@
 
 anxeb.vue.include.component('drop-area', function (helpers) {
 	return {
-		props    : [],
+		props    : ['height', 'width', 'accept', 'accept-warning'],
 		inject   : ['page', 'log', 'modal', 'dialogs'],
 		template : '/components/drop-area.vue',
 		methods  : {
@@ -21,7 +21,24 @@ anxeb.vue.include.component('drop-area', function (helpers) {
 
 					let files = e.dataTransfer.files;
 					if (files.length === 1) {
-						_self.$emit('dropped', files[0]);
+						let $file = files[0];
+						let $accept = _self.accept;
+						let $allowed = true;
+
+						if (_self.accept != null) {
+							if ($accept.endsWith('*')) {
+								$accept = $accept.replaceAll('*','');
+								$allowed = $file.type.startsWith($accept);
+							} else {
+								$allowed = $file.type === $accept
+							}
+						}
+
+						if ($allowed) {
+							_self.$emit('dropped', $file);
+						} else {
+							_self.log(_self.acceptWarning || 'No se permite este tipo de archivo').exception();
+						}
 					} else {
 						_self.log('Solo puede arrastrar un archivo a la vez').exception();
 					}

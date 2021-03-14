@@ -4,7 +4,7 @@ anxeb.vue.include.component('field-file', function (helpers) {
 	return {
 		template     : '/controls/field-file.vue',
 		inheritAttrs : false,
-		props        : ['label', 'id', 'readonly', 'field-name', 'size', 'focus', 'required'],
+		props        : ['label', 'id', 'readonly', 'field-name', 'size', 'focus', 'required', 'accept'],
 		mounted      : function () {
 			let _self = this;
 			this.name = _self.fieldName || (_self.$vnode.data.model != null ? _self.$vnode.data.model.expression : null);
@@ -23,8 +23,9 @@ anxeb.vue.include.component('field-file', function (helpers) {
 			},
 			browse : function () {
 				let _self = this;
-
-				helpers.browse.file().then(function (file) {
+				helpers.browse.file({
+					accept : _self.accept
+				}).then(function (file) {
 					_self.file = file;
 					_self.$emit('input', file);
 				}).catch(function (err) {
