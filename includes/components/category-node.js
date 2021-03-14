@@ -4,7 +4,7 @@ anxeb.vue.include.component('category-node', function (helpers) {
 	return {
 		template     : '/components/category-node.vue',
 		inheritAttrs : false,
-		props        : ['value', 'api', 'item', 'level', 'offset', 'controller', 'list-name'],
+		props        : ['value', 'api', 'item', 'level', 'offset', 'controller', 'list-name', 'context-menu'],
 		inject       : ['page', 'log', 'modal', 'dialogs'],
 		mounted      : function () {
 			this.prepare();
@@ -128,11 +128,6 @@ anxeb.vue.include.component('category-node', function (helpers) {
 			normalizeSelection : function () {
 				if (this.controller.selected != null && this.item != null && this.item !== this.controller.selected && this.item.id === this.controller.selected.id) {
 					this.controller.selected = this.item;
-				}
-			},
-			onContextMenu      : function (e) {
-				if (this.$refs.actions != null) {
-					this.$refs.actions.contextmenu(e);
 				}
 			}
 		},
