@@ -4,6 +4,7 @@ anxeb.vue.include.component('modal', function (helpers) {
 
 	let Button = function (params, modal) {
 		let _self = this;
+		let _busy = false;
 		_self.modal = modal;
 		_self.modal = modal;
 
@@ -19,15 +20,20 @@ anxeb.vue.include.component('modal', function (helpers) {
 		_self.visible = params.visible;
 
 		_self.action = async function () {
-			let actionResult;
+			if (_busy === false) {
+				_busy = true;
 
-			if (params.action) {
-				_self.modal.busy();
-				actionResult = await params.action(_self, _self.modal);
-				_self.modal.idle();
-			}
-			if (_self.close === true && actionResult !== false) {
-				_self.modal.close();
+				let actionResult;
+
+				if (params.action) {
+					_self.modal.busy();
+					actionResult = await params.action(_self, _self.modal);
+					_self.modal.idle();
+				}
+				if (_self.close === true && actionResult !== false) {
+					_self.modal.close();
+				}
+				_busy = false;
 			}
 		};
 	};
