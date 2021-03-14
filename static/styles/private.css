@@ -424,6 +424,10 @@ html {
   padding-bottom: 14px;
 }
 
+.app-panel-form-container .col {
+  padding-top: 2px;
+}
+
 .app-page-form {
   padding-top: 10px;
   padding-bottom: 14px;
@@ -3269,6 +3273,7 @@ form label {
 
 .app-drag-area {
   position: relative;
+  opacity: 0.8;
 }
 
 .app-drag-area-hover {
@@ -3285,10 +3290,7 @@ form label {
 
 .app-drag-area ._watermark ._container {
   position: relative;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: auto;
-  margin-right: auto;
+  margin:auto;
 }
 
 .app-drag-area ._watermark div i {
