@@ -7,7 +7,6 @@
 			<div :style="{'margin-top' : emptyOptions.caption ? '' : '11px'}" class="text" v-html="emptyOptions.label || 'Tabla sin Registros'"></div>
 			<a v-if="emptyOptions.caption" v-on:click="emptyOptions.action()">${emptyOptions.caption}</a>
 		</div>
-
 	</div>
 	<div v-else>
 		<div style="height: 68px" v-if="exists('tools') || exists('filters')">

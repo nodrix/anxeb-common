@@ -252,7 +252,8 @@
 .app-grid-empty-container {
 	user-select: none;
 	margin: 0 auto;
-	margin-top: 20vh;
+  	position: relative;
+	top: 22vh;
 	text-align: center;
 	font-size: 1em;
 	display: table;
