@@ -1,0 +1,44 @@
+.app-toggle-button {
+  display: inline-flex;
+}
+
+.app-toggle-button ._container:hover {
+
+}
+
+.app-toggle-button ._container {
+  cursor: pointer;
+  color: white;
+  background-color: #d9d9d9;
+  border-radius: 12px;
+  display: inline-flex;
+  padding: 15px;
+  width: 100%;
+  min-width: 160px;
+}
+
+.app-toggle-button ._center {
+  margin: auto;
+}
+
+.app-toggle-button ._active {
+  background-color: var(--app-information-color);
+}
+
+.app-toggle-button ._container ._label {
+  text-align: center;
+  line-height: 1;
+  line-break: loose;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+
+.app-toggle-button ._container ._icon {
+  display: flex;
+}
+
+.app-toggle-button ._container ._icon i {
+  font-size: 50px;
+  margin: auto;
+}
