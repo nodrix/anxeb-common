@@ -4,7 +4,7 @@ anxeb.vue.include.component('category-node', function (helpers) {
 	return {
 		template     : '/components/category-node.vue',
 		inheritAttrs : false,
-		props        : ['value', 'api', 'item', 'level', 'offset', 'controller', 'list-name', 'context-menu'],
+		props        : ['value', 'api', 'item', 'level', 'offset', 'controller', 'list-name', 'context-menu', 'sufix'],
 		inject       : ['page', 'log', 'modal', 'dialogs'],
 		mounted      : function () {
 			this.prepare();
