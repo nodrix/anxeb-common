@@ -1,0 +1,49 @@
+.app-chips-picker {
+
+}
+
+.app-chips-picker ._container ._chip:not(:last-child) {
+  margin-right: 8px;
+}
+
+.app-chips-picker ._container {
+
+}
+
+.app-chips-picker ._container ._chip:hover {
+  color: var(--app-active-color);
+}
+
+.app-chips-picker ._container ._stack {
+  display: block !important;
+}
+
+.app-chips-picker ._container ._stack:not(:last-child) {
+  margin-right: 0px !important;
+}
+
+.app-chips-picker ._container ._chip {
+  text-align: center;
+  cursor: pointer;
+  padding-top: 2px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 8px;
+  margin-top: 8px;
+  font-size: 16px;
+  color: var(--app-foreground-color);
+  display: inline-block;
+  white-space: nowrap !important;
+  background-color: var(--app-background-color);
+}
+
+.app-chips-picker ._container ._chip ._right-icon {
+  font-size: 13px;
+  margin-left: 8px;
+}
+
+.app-chips-picker ._container ._chip ._left-icon {
+  font-size: 13px;
+  margin-right: 8px;
+}
