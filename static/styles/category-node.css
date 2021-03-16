@@ -10,7 +10,8 @@
 }
 
 .app-category-node ._selected {
-  background-color: var(--app-active-color) !important;
+  background-color: var(--app-background-color) !important;
+  color: var(--app-active-color);
 }
 
 .app-category-node ._container:hover {
@@ -19,6 +20,21 @@
 
 .app-category-node ._sub-nodes-container {
 
+}
+
+.app-category-node ._selected ._sufix {
+  color: var(--app-active-color) !important;
+}
+
+.app-category-node ._container ._sufix {
+  font-size: 12px;
+  margin-top: 2px;
+  color: #777777;
+}
+
+.app-category-node ._container ._sufix span {
+  line-height: 1;
+  margin-right: 4px;
 }
 
 .app-category-node ._container ._title {
@@ -37,8 +53,8 @@
 
 .app-category-node ._container ._actions button {
   position: relative;
-  top:8px;
-  font-size: 12px!important;
+  top: 8px;
+  font-size: 12px !important;
 }
 
 .app-category-node ._container ._count:hover {
@@ -52,6 +68,7 @@
   display: inline-block;
   font-size: 10px;
   background-color: white;
+  color: #222222;
   position: relative;
   text-align: center;
   top: -2px;

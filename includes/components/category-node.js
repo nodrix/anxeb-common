@@ -11,6 +11,7 @@ anxeb.vue.include.component('category-node', function (helpers) {
 		},
 		updated() {
 			this.prepare();
+			this.$emit('ready');
 		},
 		created  : function () {
 			this.normalizeSelection();
@@ -23,7 +24,13 @@ anxeb.vue.include.component('category-node', function (helpers) {
 				_self.$forceUpdate();
 
 				if (item) {
-					let node = _self.$refs[`node_${item.id}`];
+					let node;
+					let i = 0;
+					while (!node && i < 100) {
+						i++;
+						node = _self.$refs[`node_${item.id}`];
+						await anxeb.vue.helpers.tools.delay(1);
+					}
 					if (node && node instanceof Array) {
 						await node[0].expand(lineage);
 					}
@@ -33,6 +40,7 @@ anxeb.vue.include.component('category-node', function (helpers) {
 				let _self = this;
 				if (_self.controller && _self.item.$deleted !== true) {
 					_self.controller.selected = _self.item;
+					_self.$emit('select', _self.item);
 				}
 			},
 			toggle             : async function (value) {
@@ -62,9 +70,14 @@ anxeb.vue.include.component('category-node', function (helpers) {
 					_self.busy = false;
 				}
 			},
-			onChildRemoved     : function (removedItem) {
+			onChildRemoved     : function (item) {
 				let _self = this;
-				_self.items = _self.items.filter((item) => item.id !== removedItem.id);
+				_self.items = _self.items.filter(($item) => $item.id !== item.id);
+				_self.item.childs = _self.items.length;
+			},
+			onSelected         : function (item) {
+				let _self = this;
+				_self.$emit('select', item);
 			},
 			prepareList        : function (items) {
 				let _self = this;
@@ -101,6 +114,7 @@ anxeb.vue.include.component('category-node', function (helpers) {
 					_self.controller.selected = null;
 				}
 				_self.$emit('remove', _self.item);
+				return _self.item
 			},
 			selfRefresh        : async function (params) {
 				let _self = this;
