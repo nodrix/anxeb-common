@@ -5,25 +5,26 @@ anxeb.vue.include.component('chips-picker', function (helpers) {
 		template : '/components/chips-picker.vue',
 		props    : ['value', 'api', 'binding', 'settings', 'layout', 'context-menu', 'action', 'excluded'],
 		inject   : ['page', 'log', 'modal', 'dialogs'],
-		created  : function () {
-			this.refresh();
-		},
+		created  : async function () {},
 		mounted  : function () { },
 		updated() { },
 		methods  : {
 			refresh            : async function () {
 				let _self = this;
-				if (_self.api) {
+				if (_self.api && _self.api.get) {
 					_self.busy = true;
 					try {
 						let res = await helpers.api.get(_self.api.get);
 						_self.items = res.data;
-						return _self.items;
+						_self.busy = false;
 					} catch (err) {
 						_self.busy = false;
 						_self.log(err).exception();
 					}
+				} else {
+					_self.items = null;
 				}
+				return _self.items;
 			},
 			updateWith         : function (items) {
 				this.items = items;
@@ -115,6 +116,9 @@ anxeb.vue.include.component('chips-picker', function (helpers) {
 			},
 			defaultContextMenu : function (item) {
 				let _self = this;
+				if (_self.api == null) {
+					return null;
+				}
 				let actions = [{
 					caption : 'Cambiar Nombre',
 					action  : function () {
@@ -146,6 +150,9 @@ anxeb.vue.include.component('chips-picker', function (helpers) {
 				if (old !== null) {
 					this.$emit('changed', items);
 				}
+			},
+			busy  : function (value) {
+				this.$emit('busy', value);
 			}
 		},
 		computed : {
