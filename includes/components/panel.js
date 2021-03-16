@@ -2,9 +2,9 @@
 
 anxeb.vue.include.component('panel', function (helpers) {
 	return {
-		props    : ['type', 'width', 'hide-footer', 'border', 'no-padding', 'no-scrollbar', 'color', 'over', 'icon', 'title', 'caption', 'offset', 'state', 'allow-collapse', 'max-width', 'min-width', 'label', 'hide-at', 'show-at', 'collapse-icon'],
-		template : '/components/panel.vue',
-		methods  : {
+		props     : ['type', 'width', 'hide-footer', 'border', 'no-padding', 'no-scrollbar', 'color', 'over', 'icon', 'title', 'caption', 'offset', 'state', 'allow-collapse', 'max-width', 'min-width', 'label', 'hide-at', 'show-at', 'collapse-icon', 'track-height'],
+		template  : '/components/panel.vue',
+		methods   : {
 			updateScroll : function () {
 				let body = $(this.$refs.body);
 
@@ -38,7 +38,7 @@ anxeb.vue.include.component('panel', function (helpers) {
 				}
 			}
 		},
-		created  : function () {
+		created   : function () {
 			let _self = this;
 			if (_self.state != null) {
 				_self.visible = this.state;
@@ -57,24 +57,42 @@ anxeb.vue.include.component('panel', function (helpers) {
 				_self.updateScroll();
 			}, 800);
 		},
-		data     : function () {
+		mounted   : function () {
+			let _self = this;
+			if (_self.interval === null && _self.trackHeight === true || _self.trackHeight === 'true') {
+				_self.interval = setInterval(() => {
+					_self.scrollHeight = _self.$refs.body.scrollHeight;
+				}, 300);
+			}
+		},
+		destroyed : function () {
+			if (this.interval) {
+				clearInterval(this.interval);
+			}
+		},
+		data      : function () {
 			let _self = this;
 			return {
-				screen      : {
+				scrollHeight : null,
+				interval     : null,
+				screen       : {
 					width : $(window).width()
 				},
-				visible     : true,
-				actions     : {
+				visible      : true,
+				actions      : {
 					hide : function () {
 						_self.visible = false;
 					}
 				},
-				scrollValue : null,
-				resizing    : false
+				scrollValue  : null,
+				resizing     : false
 			}
 		},
-		watch    : {
-			visible : function (value) {
+		watch     : {
+			scrollHeight : function (value) {
+				this.updateScroll();
+			},
+			visible      : function (value) {
 				let _self = this;
 				if (value) {
 					setTimeout(function () {
@@ -85,7 +103,7 @@ anxeb.vue.include.component('panel', function (helpers) {
 				}
 			}
 		},
-		computed : {
+		computed  : {
 			showFooter : function () {
 				return !(this.hideFooter != null && (this.hideFooter === true || this.hideFooter === 'true'));
 			},
