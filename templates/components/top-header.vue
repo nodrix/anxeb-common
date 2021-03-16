@@ -14,7 +14,6 @@
 			<div>
 				<i v-if="actions.logout" v-on:click="actions.logout" class="fa fa-power-off"></i>
 				<i v-if="actions.shift" v-on:click="actions.shift" class="fa fa-user-clock"></i>
-				<!-- TODO: Lock and user login for terminal action -->
 				<i v-if="actions.settings" class="fa fa-cog" v-on:click="actions.settings"></i>
 				<i v-if="actions.refresh" class="fa fa-sync" v-on:click="actions.refresh"></i>
 				<i v-if="!fullscreen" class="fa fa-expand-arrows-alt" v-on:click="toggleFullScreen()"></i>

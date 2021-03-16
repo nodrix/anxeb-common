@@ -1381,6 +1381,10 @@ button {
   border-bottom: solid 1px var(--app-background-color);
 }
 
+.app-session span {
+  white-space: nowrap;
+}
+
 .app-session-buttons .division {
   height: 0px;
   margin-bottom: 10px;
@@ -3290,7 +3294,7 @@ form label {
 
 .app-drag-area ._watermark ._container {
   position: relative;
-  margin:auto;
+  margin: auto;
 }
 
 .app-drag-area ._watermark div i {
