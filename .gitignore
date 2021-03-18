@@ -1,4 +1,7 @@
-.idea
+/node_modules/
+/static/vendors/
+/build/
+/.idea/
 *.com
 *.class
 *.dll
@@ -23,6 +26,5 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
-/.idea
-/node_modules
-/static/vendors
+npm-debug.log
+.env
