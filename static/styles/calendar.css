@@ -1,0 +1,52 @@
+.custom_calendar .vc-pane {
+  /*height: 696px;*/
+  height: calc(100vh - 286px);
+}
+
+.custom_calendar .vc-grid-container {
+
+}
+
+.custom_calendar .day-cell {
+
+}
+
+.custom_calendar {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.custom_calendar .vc-day {
+  border-right: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+  padding: 5px;
+
+}
+
+.custom_calendar .on-top {
+  border-top: 1px solid #DDD;
+}
+
+.custom_calendar .on-left {
+  border-left: 1px solid #DDD;
+}
+
+.custom_calendar .event {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.custom_calendar ._badge {
+  display: inline-block;
+  text-align: center;
+}
+
+.custom_calendar ._badge .fa {
+  line-height: 0;
+  color: #888877;
+  font-size: 15px;
+}
+
+.event-badge {
+  color: #FFF;
+}
