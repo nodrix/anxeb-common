@@ -2,6 +2,7 @@
 
 anxeb.vue.include.component('chips-picker', function (helpers) {
 	return {
+		vendors  : ['/styles/chips-picker.css'],
 		template : '/components/chips-picker.vue',
 		props    : ['value', 'api', 'binding', 'settings', 'layout', 'context-menu', 'action', 'excluded'],
 		inject   : ['page', 'log', 'modal', 'dialogs'],

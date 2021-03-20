@@ -2,6 +2,7 @@
 
 anxeb.vue.include.component('video-box', function (helpers) {
 	return {
+		vendors  : ['/styles/video-box.css'],
 		props    : ['source', 'inverted', 'height', 'width', 'caption', 'reset', 'automute', 'controls', 'failed', 'levels', 'identity', 'radius', 'toggle', 'icon-size', 'icon-color', 'audio-toggler'],
 		template : '/components/video-box.vue',
 		mounted  : function () {

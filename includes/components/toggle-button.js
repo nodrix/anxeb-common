@@ -2,6 +2,7 @@
 
 anxeb.vue.include.component('toggle-button', function (helpers) {
 	return {
+		vendors  : ['/styles/toggle-button.css'],
 		props    : ['value', 'label', 'icon', 'width', 'height', 'size'],
 		template : '/components/toggle-button.vue',
 		created  : function () {

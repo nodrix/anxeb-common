@@ -19,10 +19,14 @@ body {
   border-radius: 100px;
 }
 
-a, router-link {
+router-link {
   color: #675dff;
   cursor: pointer !important;
-  text-decoration: underline;
+}
+
+
+a {
+  text-decoration: none;
 }
 
 .app-center-loading {

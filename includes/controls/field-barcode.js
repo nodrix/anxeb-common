@@ -2,6 +2,7 @@
 
 anxeb.vue.include.component('field-barcode', function (helpers) {
 	return {
+		vendors      : ['/vendors/jsbarcode/JsBarcode.all.min.js'],
 		template     : '/controls/field-barcode.vue',
 		inheritAttrs : false,
 		props        : ['label', 'value', 'id', 'readonly', 'url', 'alt-url', 'height', 'width', 'field-name', 'max-height', 'max-width', 'size', 'display-value'],

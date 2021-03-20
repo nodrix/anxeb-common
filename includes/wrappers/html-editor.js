@@ -4,7 +4,12 @@ anxeb.vue.include.component('html-editor', function (helpers) {
 	let _editor;
 
 	return {
-		template  : '/components/html-editor.vue',
+		vendors   : [
+			'https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js',
+			'https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/es.js',
+			'https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css'
+		],
+		template  : '/wrappers/html-editor.vue',
 		props     : ['value', 'height', 'gallery-url'],
 		inject    : ['page', 'log', 'modal', 'dialogs'],
 		created   : function () {
@@ -21,11 +26,11 @@ anxeb.vue.include.component('html-editor', function (helpers) {
 				_editor = null;
 			}
 		},
-		mounted   : function () {
+		mounted   : async function () {
 			let _self = this;
-
 			if (_editor == null) {
 				let textarea = $(_self.$refs.textarea).get(0);
+
 				_editor = window.SUNEDITOR.create(textarea, {
 					height           : 'auto',
 					value            : _self.html || '',

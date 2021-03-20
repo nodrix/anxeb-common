@@ -2,6 +2,7 @@
 
 anxeb.vue.include.component('context-menu', function (helpers) {
 	return {
+		vendors  : ['/styles/context-menu.css'],
 		props    : ['offset'],
 		template : '/components/context-menu.vue',
 		mounted  : function () {

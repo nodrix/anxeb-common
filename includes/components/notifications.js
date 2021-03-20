@@ -30,6 +30,7 @@ anxeb.vue.include.component('notifications', function (helpers) {
 	};
 
 	return {
+		vendors  : ['/styles/notifications.css'],
 		template : '/components/notifications.vue',
 		props    : ['max', 'delay', 'reversed', 'disabled', 'floating'],
 		methods  : {

@@ -4,6 +4,7 @@ anxeb.vue.include.component('field-qrcode', function (helpers) {
 	let _qr;
 
 	return {
+		vendors      : ['https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js'],
 		template     : '/controls/field-qrcode.vue',
 		inheritAttrs : false,
 		props        : ['label', 'value', 'id', 'readonly', 'height', 'width', 'field-name', 'max-height', 'max-width', 'size', 'display-value'],

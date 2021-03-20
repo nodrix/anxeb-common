@@ -39,6 +39,7 @@ anxeb.vue.include.component('modal', function (helpers) {
 	};
 
 	return {
+		vendors  : ['/vendors/v-calendar/v-calendar.umd.min.js', '/styles/modal.css', '/styles/calendar.css'],
 		template : '/components/modal.vue',
 		props    : ['float', 'fade'],
 		watch    : {

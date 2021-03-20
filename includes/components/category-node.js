@@ -2,6 +2,7 @@
 
 anxeb.vue.include.component('category-node', function (helpers) {
 	return {
+		vendors      : ['/styles/category-node.css'],
 		template     : '/components/category-node.vue',
 		inheritAttrs : false,
 		props        : ['value', 'api', 'item', 'level', 'offset', 'controller', 'list-name', 'context-menu', 'sufix'],

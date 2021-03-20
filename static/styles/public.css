@@ -1,0 +1,191 @@
+body {
+  font-family: sans-serif, "Roboto", "Helvetica Neue", Helvetica, Arial;
+  margin: 0 !important;
+}
+
+.btn {
+  border-radius: 100px;
+}
+
+.app-center-loading {
+  position: absolute;
+  top: calc(50% - 30px) !important;
+  left: calc(50% - 30px) !important;
+}
+
+.app-center-loading i {
+  font-size: 60px;
+  color: var(--app-background-color) !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  border: none;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0px;
+  border: none;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.md-form-group {
+  padding: 18px 0 0px 0 !important;
+  position: relative;
+}
+
+.app-modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  z-index: 10000;
+}
+
+.app-modal-loading {
+  text-align: center;
+  padding: 50px;
+}
+
+.app-modal-loading i {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.app-modal-loading span {
+  font-size: 15px !important;
+}
+
+.modal-title {
+  position: relative;;
+  top: 2px;
+}
+
+.app-modal-body {
+  font-size: 1.1em;
+}
+
+button {
+  cursor: pointer;
+}
+
+form input {
+  background-color: #ffffff !important;
+  margin-top: 3px;
+  text-indent: 0px;
+}
+
+form label {
+  height: 12px;
+  padding-left: 8px !important;
+  font-size: 14px !important;
+}
+
+.app-login-build {
+  color: #333333;
+  font-size: 11px;
+  margin-right: 25px;
+  margin-top: -8px;
+  margin-bottom: 5px;
+}
+
+body {
+  font-family: sans-serif, "Roboto", "Helvetica Neue", Helvetica, Arial;
+  margin: 0 !important;
+}
+
+.btn {
+  border-radius: 100px;
+}
+
+a {
+  color: #675dff;
+  cursor: pointer !important;
+  text-decoration: underline;
+}
+
+.app-center-loading {
+  position: absolute;
+  top: calc(50% - 30px) !important;
+  left: calc(50% - 30px) !important;
+}
+
+.app-center-loading i {
+  font-size: 60px;
+  color: var(--app-background-color) !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  border: none;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0px;
+  border: none;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.md-form-group {
+  padding: 18px 0 0px 0 !important;
+  position: relative;
+}
+
+.app-modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  z-index: 10000;
+}
+
+.app-modal-loading {
+  text-align: center;
+  padding: 50px;
+}
+
+.app-modal-loading i {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.app-modal-loading span {
+  font-size: 15px !important;
+}
+
+.modal-title {
+  position: relative;;
+  top: 2px;
+}
+
+.app-modal-body {
+  font-size: 1.1em;
+}
+
+button {
+  cursor: pointer;
+}
+
+form input {
+  background-color: #ffffff !important;
+  margin-top: 3px;
+  text-indent: 0px;
+}
+
+form label {
+  height: 12px;
+  padding-left: 8px !important;
+  font-size: 14px !important;
+}
+
+.app-login-build {
+  color: #333333;
+  font-size: 11px;
+  margin-right: 25px;
+  margin-top: -8px;
+  margin-bottom: 5px;
+}
