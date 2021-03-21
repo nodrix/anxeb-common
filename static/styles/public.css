@@ -103,7 +103,7 @@ body {
 a {
   color: #675dff;
   cursor: pointer !important;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .app-center-loading {
