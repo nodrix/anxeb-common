@@ -751,6 +751,33 @@ html {
   border: none;
 }
 
+.modal .app-form-notification {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.modal .modal-content {
+  margin-top: 8vh;
+}
+
+@media (max-height: 800px) {
+  .modal .modal-content {
+	margin-top: 2vh !important;
+  }
+}
+
+.box-body .row {
+  margin-top: -3px !important;
+}
+
+.box-body .row:last-child {
+  margin-bottom: -6px !important;
+}
+
+.box-body > .row:last-child > [class*="col"] {
+  padding-bottom: 0 !important;
+}
+
 .app-modal-buttons-centered {
   text-align: center;
   padding: 15px;
@@ -1578,6 +1605,8 @@ button {
 
 .box-body {
   padding-bottom: 1px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
 }
 
 .app-chart-box-body {
