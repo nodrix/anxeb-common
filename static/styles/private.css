@@ -1382,7 +1382,6 @@ button[disabled] {
 .app-session button {
   -webkit-transition: all 0.3s;
   float: right;
-  margin-right: 1px;
   margin-left: 5px;
   padding-top: 3px;
   padding-bottom: 2px;
@@ -2381,6 +2380,10 @@ form label {
 
 .app-field-custom-chips {
   padding-top: 6px;
+  padding-left: 6px;
+}
+
+.modal .app-field-custom-chips {
   padding-left: 2px;
 }
 
@@ -2727,10 +2730,10 @@ form label {
 
 .modal .md-form-group textarea {
   margin-bottom: -7px !important;
-  padding-left: 2px !important;
-  padding-top: 5px !important;
-  padding-bottom: 4px !important;
-  padding-right: 10px !important;
+  padding-left: 2px;
+  padding-top: 5px;
+  padding-bottom: 4px;
+  padding-right: 10px;
   margin-top: 5px;
 }
 
