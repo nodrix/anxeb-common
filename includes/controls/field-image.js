@@ -5,7 +5,7 @@ anxeb.vue.include.component('field-image', function (helpers) {
 	return {
 		template     : '/controls/field-image.vue',
 		inheritAttrs : false,
-		props        : ['label', 'id', 'readonly', 'url', 'alt-url', 'height', 'width', 'field-name', 'size', 'can-preview', 'drop-color', 'value'],
+		props        : ['label', 'id', 'readonly', 'url', 'alt-url', 'height', 'width', 'field-name', 'size', 'can-preview', 'drop-color', 'value', 'file-name'],
 		mounted      : function () {
 			let _self = this;
 			this.name = _self.fieldName || (_self.$vnode.data.model != null ? _self.$vnode.data.model.expression : null);

@@ -95,9 +95,11 @@ module.exports = {
 
 const imageResponse = function (context, data, options) {
 	let img = data;
+	let ext = 'png';
 
 	if (typeof data === 'string') {
 		if (data.startsWith('data:image/jpeg;base64')) {
+			ext = 'jpg';
 			data = data.replace(/^data:image\/jpeg;base64,/, '');
 			img = Buffer.from(data, 'base64');
 			context.res.type('jpeg');
@@ -123,6 +125,11 @@ const imageResponse = function (context, data, options) {
 		}
 
 		imageSharp.toBuffer().then(function (result) {
+			if (context.query.attachment != null) {
+				let fileName = `${context.query.attachment}.${ext}`;
+				context.res.set('Content-disposition', 'attachment; filename=' + fileName);
+			}
+
 			context.res.end(result);
 		}).catch(function (err) {
 			context.service.log.exception.invalid_image_data.args(err).throw(context);

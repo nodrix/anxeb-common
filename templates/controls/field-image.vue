@@ -5,6 +5,9 @@
       <div class="_image" v-else v-on:click="preview()" v-bind:style="{'background-size' : size, 'background-image': current_image, height:height, width:width, cursor: canPreview === 'true' || canPreview === true ? null : 'default!important'}"></div>
     </div>
     <input class="md-input" style="display: none">
-    <label v-if="label != null">${label}</label>
+    <label style="width: 100%" v-if="label != null">${label}
+      <a v-on:click="preview()" v-if="canPreview === 'true' || canPreview === true" class="pull-right" style="margin-left: 10px"><i class="fa fa-external-link-alt"></i></a>
+      <a :href="current_url + '&attachment=' + fileName" v-if="fileName != null" class="pull-right"><i class="fa fa-save"></i></a>
+    </label>
   </div>
 </div>
