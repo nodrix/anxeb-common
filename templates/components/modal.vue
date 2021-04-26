@@ -6,7 +6,7 @@
 					<i v-if="icon" class="fas fa app-modal-icon" :class="icon"></i>
 					<span v-html="title"></span>
 				</h5>
-				<button v-if="onCancel" type="button" class="close" aria-label="Close" data-dismiss="modal" v-on:click="cancel">
+				<button v-if="onCancel" type="button" class="close" aria-label="Cerrar" data-dismiss="modal" v-on:click="cancel">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>

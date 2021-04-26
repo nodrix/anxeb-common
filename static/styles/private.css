@@ -751,6 +751,33 @@ html {
   border: none;
 }
 
+.modal .app-form-notification {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.modal .modal-content {
+  margin-top: 8vh;
+}
+
+@media (max-height: 800px) {
+  .modal .modal-content {
+	margin-top: 2vh !important;
+  }
+}
+
+.box-body .row {
+  margin-top: -3px !important;
+}
+
+.box-body .row:last-child {
+  margin-bottom: -6px !important;
+}
+
+.box-body > .row:last-child > [class*="col"] {
+  padding-bottom: 0 !important;
+}
+
 .app-modal-buttons-centered {
   text-align: center;
   padding: 15px;
@@ -1355,7 +1382,6 @@ button[disabled] {
 .app-session button {
   -webkit-transition: all 0.3s;
   float: right;
-  margin-right: 1px;
   margin-left: 5px;
   padding-top: 3px;
   padding-bottom: 2px;
@@ -1578,6 +1604,8 @@ button {
 
 .box-body {
   padding-bottom: 1px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
 }
 
 .app-chart-box-body {
@@ -2352,6 +2380,10 @@ form label {
 
 .app-field-custom-chips {
   padding-top: 6px;
+  padding-left: 6px;
+}
+
+.modal .app-field-custom-chips {
   padding-left: 2px;
 }
 
@@ -2698,10 +2730,10 @@ form label {
 
 .modal .md-form-group textarea {
   margin-bottom: -7px !important;
-  padding-left: 2px !important;
-  padding-top: 5px !important;
-  padding-bottom: 4px !important;
-  padding-right: 10px !important;
+  padding-left: 2px;
+  padding-top: 5px;
+  padding-bottom: 4px;
+  padding-right: 10px;
   margin-top: 5px;
 }
 
