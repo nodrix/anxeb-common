@@ -2,7 +2,7 @@
 	<ul class="nav mr-auto">
 		<li class="nav-item dropdown app-main-menu" v-for="group in sortedGroups" :class="{'app-disabled' : group.isDisabled && group.isDisabled()}" v-if="(group.isVisible == null || group.isVisible() !== false) && (((group.mobile == null || group.mobile === false) && screen.width > mobileMax) || (group.mobile === true && screen.width <= mobileMax) || (screen.width <= group.mobile))">
       <router-link class="nav-link" data-toggle="dropdown" :to="group.path || ''" v-if="group.visible !== false" v-bind:class="{'app-menu-active': group.active === true,'app-menu-divider': group.divider === true }">
-				<div v-on:mouseover="$parent.page.setHint(group)" v-on:click="group.action ? group.action() : null">
+				<div v-on:mouseover="$parent.page.setHint(group)" v-on:click.prevent="group.action ? group.action() : null">
 					<i v-bind:style="{color: group.icon && group.icon.color ? group.icon.color + '!important' : undefined}" class="fa fa-fw text-muted" :class="group.icon ? group.icon.class : undefined"></i>
 					<span v-if="group.caption" v-bind:style="{color:group.caption && group.caption.color ? group.caption.color + '!important' : undefined}">${group.caption.title}</span>
 				</div>
