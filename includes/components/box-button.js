@@ -2,7 +2,7 @@
 
 anxeb.vue.include.component('box-button', function (helpers) {
 	return {
-		props    : ['label', 'icon', 'alert', 'width', 'path', 'type', 'description', 'caption', 'notifications', 'show-text', 'finally'],
+		props    : ['label', 'icon', 'alert', 'width', 'path', 'type', 'description', 'caption', 'notifications', 'show-text', 'finally', 'isActive'],
 		template : '/components/box-button.vue',
 		mounted  : function () {
 			this.updateState();
@@ -20,7 +20,11 @@ anxeb.vue.include.component('box-button', function (helpers) {
 			updateState : function (routePath) {
 				routePath = routePath || this.$router.currentRoute.path;
 				let buttonPath = this.path;
-				this.active = routePath.toLowerCase().indexOf(buttonPath.toLowerCase()) > -1 || buttonPath.toLowerCase().indexOf(routePath.toLowerCase()) > -1;
+				if (this.isActive != null) {
+					this.active = this.isActive(routePath);
+				} else {
+					this.active = routePath.toLowerCase().indexOf(buttonPath.toLowerCase()) > -1 || buttonPath.toLowerCase().indexOf(routePath.toLowerCase()) > -1;
+				}
 			}
 		},
 		watch    : {
