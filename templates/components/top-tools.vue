@@ -23,6 +23,8 @@
         </div>
 
         <span v-if="group.label && group.label.enabled === true" v-bind:style="{backgroundColor:group.label.fill, color:group.label.color}" class="label label-sm up warn" v-on:mouseover="$parent.page.setHint(group)" v-on:click="group.action ? group.action() : null">${group.label.text}</span>
+  
+        <span v-if="group.badge != null && group.badge() != null" class="label label-sm up red" style="border: solid 2px white; font-size: 0.8em; border-radius: 20px">${group.badge()}</span>
       </router-link>
 
       <a href="" v-else class="nav-link app-navigation-tools-icons text-center"
@@ -36,7 +38,8 @@
            v-on:mouseover="$parent.page.setHint(group)"
            v-on:click="group.action ? group.action() : null">
         </i>
-
+        
+        
         <span v-if="group.caption" style="font-size: 10px; text-transform: uppercase; line-height: 0!important; white-space: nowrap" v-bind:style="{color:group.caption.color}">${group.caption.title}</span>
 
         <div v-if="group.icon.image && !group.icon.class" class="avatar app-tool-avatar" v-on:mouseover="$parent.page.setHint(group)" v-on:click="group.action ? group.action() : null">
@@ -44,6 +47,8 @@
         </div>
 
         <span v-if="group.label && group.label.enabled === true" v-bind:style="{backgroundColor:group.label.fill, color:group.label.color}" class="label label-sm up warn" v-on:mouseover="$parent.page.setHint(group)" v-on:click="group.action ? group.action() : null">${group.label.text}</span>
+  
+        <span v-if="group.badge != null && group.badge() != null" class="label label-sm up red" style="border: solid 2px white; font-size: 0.8em; border-radius: 20px">${group.badge()}</span>
       </a>
 
       <div v-if="group.pages && group.pages.length && (!group.type || group.type === 'Menu')" class="dropdown-menu dropdown-menu-overlay animated fadeIn pull-right">
