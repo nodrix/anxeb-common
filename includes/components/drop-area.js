@@ -26,11 +26,15 @@ anxeb.vue.include.component('drop-area', function (helpers) {
 						let $allowed = true;
 
 						if (_self.accept != null) {
-							if ($accept.endsWith('*')) {
-								$accept = $accept.replaceAll('*','');
-								$allowed = $file.type.startsWith($accept);
+							if (_self.accept instanceof Array) {
+								$allowed = _self.accept.find((item) => $file.type.includes(item));
 							} else {
-								$allowed = $file.type === $accept
+								if ($accept.endsWith('*')) {
+									$accept = $accept.replaceAll('*', '');
+									$allowed = $file.type.startsWith($accept);
+								} else {
+									$allowed = $file.type === $accept
+								}
 							}
 						}
 

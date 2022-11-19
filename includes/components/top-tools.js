@@ -115,7 +115,7 @@ anxeb.vue.include.component('top-tools', function (helpers) {
 		_self.owners = params.owners || null;
 		_self.pages = [];
 		_self.type = params.type || null;
-
+		_self.badge = params.badge || null;
 
 		if (pages) {
 			for (let i = 0; i < pages.length; i++) {

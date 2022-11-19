@@ -312,6 +312,10 @@ module.exports = function (context, params) {
 			});
 		}
 
+		if(params.payload) {
+			data = Object.assign(data, params.payload);
+		}
+
 		let name = data[params.key_field || 'id'];
 		let fileGroup = params.group || 'misc';
 
@@ -354,9 +358,10 @@ module.exports = function (context, params) {
 		await browser.close();
 
 		return {
-			name  : name,
-			group : fileGroup,
-			size  : anxeb.utils.file.stats(reportFilePath).size
+			name    : name,
+			group   : fileGroup,
+			path    : reportFilePath,
+			size    : anxeb.utils.file.stats(reportFilePath).size
 		}
 	}
 

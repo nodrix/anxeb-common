@@ -16,6 +16,9 @@ module.exports = {
 			}
 
 			if (context.query.raw === undefined) {
+				let $png = context.query.png;
+				let $jpg = context.query.jpg;
+				let $webp = context.query.webp;
 				let sharpOptions = null;
 
 				if (context.query.width) {
@@ -33,27 +36,37 @@ module.exports = {
 					sharpOptions.sharpen = false;
 				}
 
-				if (context.query.png) {
+				if (context.query.quality) {
+					if (options.extension === 'png') {
+						$png = context.query.quality;
+					} else if (options.extension === 'png') {
+						$jpg = context.query.quality;
+					} else {
+						$webp = context.query.quality;
+					}
+				}
+
+				if ($png) {
 					sharpOptions = sharpOptions || {};
 					sharpOptions.png = {
 						compressionLevel : context.query.compressionLevel != null ? parseInt(context.query.compressionLevel) : 9,
-						quality          : parseInt(context.query.png)
+						quality          : parseInt($png)
 					};
 				}
 
-				if (context.query.webp) {
+				if ($webp) {
 					sharpOptions = sharpOptions || {};
 					sharpOptions.webp = {
 						alphaQuality : context.query.alphaQuality != null ? parseInt(context.query.alphaQuality) : 100,
-						quality      : parseInt(context.query.webp)
+						quality      : parseInt($webp)
 					};
 				}
 
-				if (context.query.jpg) {
+				if ($jpg) {
 					sharpOptions = sharpOptions || {};
 					sharpOptions.jpg = {
 						progressive : context.query.progressive == null,
-						quality     : parseInt(context.query.jpg)
+						quality     : parseInt($jpg)
 					};
 				}
 
@@ -95,9 +108,11 @@ module.exports = {
 
 const imageResponse = function (context, data, options) {
 	let img = data;
+	let ext = 'png';
 
 	if (typeof data === 'string') {
 		if (data.startsWith('data:image/jpeg;base64')) {
+			ext = 'jpg';
 			data = data.replace(/^data:image\/jpeg;base64,/, '');
 			img = Buffer.from(data, 'base64');
 			context.res.type('jpeg');
@@ -111,21 +126,37 @@ const imageResponse = function (context, data, options) {
 	}
 
 	if (options) {
-		var imageSharp = sharp(img);
+		let imageSharp = sharp(img);
 
-		for (var action in options) {
+		for (let action in options) {
 			let pars = options[action];
-			if (pars === false) {
-				imageSharp = imageSharp[action]();
-			} else {
-				imageSharp = imageSharp[action](pars);
+			if (imageSharp[action] != null) {
+				if (pars === false) {
+					imageSharp = imageSharp[action]();
+				} else {
+					imageSharp = imageSharp[action](pars);
+				}
 			}
 		}
 
 		imageSharp.toBuffer().then(function (result) {
+			if (context.query.attachment != null) {
+				let fileName = `${context.query.attachment}.${ext}`;
+				context.res.set('Content-disposition', 'attachment; filename=' + fileName);
+			}
+
 			context.res.end(result);
-		}).catch(function (err) {
-			context.service.log.exception.invalid_image_data.args(err).throw(context);
+		}).catch(async function (err) {
+			if (typeof data === 'string' && (options.retry == null || options.retry < 1)) {
+				let fetchResult = anxeb.utils.file.read(data);
+				data = fetchResult;
+				options = options || {};
+				options.retry = 1;
+				delete options.isPath;
+				imageResponse(context, data, options);
+			} else {
+				context.service.log.exception.invalid_image_data.args(err).throw(context);
+			}
 		});
 	} else {
 		context.res.end(img);

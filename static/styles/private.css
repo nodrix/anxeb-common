@@ -344,6 +344,10 @@ html {
   display: table;
 }
 
+.app-session-list .app-grid-empty-container {
+  top: 20px !important;
+}
+
 .app-session-table .app-session {
   display: table-cell;
   height: 1px;

@@ -10,9 +10,14 @@
 	width: 100%;
 }
 
+.app-grid .app-grid-table .app-grid-selected {
+  background-color: var(--app-active-color) !important;
+  cursor: default !important;
+}
+
 .app-grid .app-grid-table .app-grid-selectable:hover {
-	background-color: rgba(0, 0, 0, 0.1) !important;
-	cursor: pointer !important;
+	background-color: rgba(0, 0, 0, 0.1);
+	cursor: pointer;
 }
 
 .app-grid .app-grid-table .app-grid-hover:hover {
