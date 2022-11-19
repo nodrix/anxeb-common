@@ -5,7 +5,7 @@ anxeb.vue.include.component('field-image', function (helpers) {
 	return {
 		template     : '/controls/field-image.vue',
 		inheritAttrs : false,
-		props        : ['label', 'id', 'readonly', 'url', 'alt-url', 'height', 'width', 'field-name', 'size', 'can-preview', 'drop-color', 'value'],
+		props        : ['label', 'id', 'readonly', 'url', 'alt-url', 'height', 'width', 'field-name', 'size', 'can-preview', 'can-remove', 'drop-color', 'value'],
 		mounted      : function () {
 			let _self = this;
 			this.name = _self.fieldName || (_self.$vnode.data.model != null ? _self.$vnode.data.model.expression : null);
@@ -65,12 +65,21 @@ anxeb.vue.include.component('field-image', function (helpers) {
 					window.open(_self.current_url, '_blank');
 				}
 			},
+			remove     : function () {
+				let _self = this;
+
+				if (_self.canRemove === 'true' || _self.canRemove === true) {
+					_self.reset();
+					_self.removed = true;
+				}
+			},
 			browse     : function () {
 				let _self = this;
 
 				helpers.browse.image().then(function (image) {
 					_self.image = image;
 					_self.$emit('input', image.data);
+					_self.removed = false;
 				}).catch(function (err) {
 					_self.$parent.log('Error cargando imagen').exception();
 				});
@@ -91,6 +100,7 @@ anxeb.vue.include.component('field-image', function (helpers) {
 		computed     : {
 			current_url   : function () {
 				let _self = this;
+
 				if (_self.image && _self.image.href) {
 					return _self.image.href;
 				} else {
@@ -104,6 +114,9 @@ anxeb.vue.include.component('field-image', function (helpers) {
 			},
 			current_image : function () {
 				let _self = this;
+				if (_self.removed === true) {
+					return null;
+				}
 				if (_self.image && _self.image.href) {
 					return 'url(' + _self.image.href + ')';
 				} else {
@@ -124,9 +137,10 @@ anxeb.vue.include.component('field-image', function (helpers) {
 		},
 		data         : function () {
 			return {
-				state : null,
-				name  : null,
-				image : null
+				state   : null,
+				name    : null,
+				image   : null,
+				removed : false
 			}
 		},
 	};
