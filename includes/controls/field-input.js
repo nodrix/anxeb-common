@@ -25,7 +25,7 @@ anxeb.vue.include.component('field-input', function () {
 		vendors      : ['/styles/calendar.css', '/vendors/v-calendar/v-calendar.umd.min.js'],
 		template     : '/controls/field-input.vue',
 		inheritAttrs : false,
-		props        : ['label', 'value', 'focus', 'required', 'type', 'id', 'rows', 'allow-empty', 'force-uppercase', 'max-length', 'min-length', 'readonly', 'decimals', 'prefix', 'percent', 'sufix', 'comma', 'field-name', 'value-color', 'value-weight', 'date-format', 'calendar-placement', 'unix', 'align', 'auto-select', 'height'],
+		props        : ['label', 'value', 'focus', 'required', 'type', 'id', 'rows', 'allow-empty', 'force-uppercase', 'max-length', 'min-length', 'readonly', 'decimals', 'prefix', 'percent', 'sufix', 'comma', 'field-name', 'fill-color', 'value-color', 'value-weight', 'date-format', 'calendar-placement', 'unix', 'align', 'auto-select', 'height', 'font-family', 'spellcheck', 'white-space'],
 		mounted      : function () {
 			let _self = this;
 			this.name = _self.fieldName || (_self.$vnode.data.model != null ? _self.$vnode.data.model.expression : null);
