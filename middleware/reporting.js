@@ -33,6 +33,27 @@ module.exports = function (context, params) {
 	let _scripts = params.scripts;
 
 	let _helpers = {
+		html    : function (context, params, data) {
+			return function (value) {
+				if ($isNull(value)) {
+					return null;
+				}
+				let translate_re = /&(nbsp|amp|quot|lt|gt);/g;
+				let translate = {
+					"nbsp" : " ",
+					"amp"  : "&",
+					"quot" : "\"",
+					"lt"   : "<",
+					"gt"   : ">"
+				};
+				return value == null ? '' : value.replace(translate_re, function (match, entity) {
+					return translate[entity];
+				}).replace(/&#(\d+);/gi, function (match, numStr) {
+					let num = parseInt(numStr, 10);
+					return String.fromCharCode(num);
+				});
+			}
+		},
 		divide  : function (context, params, data) {
 			return function (a, b) {
 				return anxeb.utils.money.normalize(a / b);
@@ -72,6 +93,9 @@ module.exports = function (context, params) {
 		},
 		greater : function (context, params, data) {
 			return function (value, comp, opts) {
+				if ($isNull(value)) {
+					return false;
+				}
 				if (value > comp) {
 					return opts.fn(this);
 				}
@@ -152,6 +176,14 @@ module.exports = function (context, params) {
 				}
 
 				return date.format(format);
+			}
+		},
+		upper   : function (context, params, data) {
+			return function (value) {
+				if ($isNull(value)) {
+					return null;
+				}
+				return value.toUpperCase();
 			}
 		},
 		pick    : function (context, params, data) {
@@ -242,16 +274,43 @@ module.exports = function (context, params) {
 	};
 
 	_self.build = async function (params) {
-		let apiUri = context.service.socket.uri + anxeb.utils.url.normalize(params.api);
-		let templatePath = anxeb.utils.path.join(_templatesPath, params.hbs);
+		let compilerParams;
+		if (params.template == null || typeof params.template != 'string') {
+			throw new Error('Invalid template provided');
+		}
 
-		let data = await _context.socket.do.get({
-			uri     : apiUri,
-			json    : true,
-			headers : {
-				Authorization : 'Bearer ' + (params.token || _context.bearer.token)
+		if (params.template.endsWith('hbs')) {
+			compilerParams = {
+				hbs : anxeb.utils.path.join(_templatesPath, params.template)
 			}
-		});
+		} else {
+			const res = await _context.socket.do.get({
+				uri     : context.service.socket.uri + anxeb.utils.url.normalize(params.template),
+				json    : true,
+				headers : {
+					'Content-Type' : 'text/html',
+					Authorization  : 'Bearer ' + (params.token || _context.bearer.token)
+				}
+			});
+			compilerParams = {
+				content : res.layout,
+				root    : _templatesPath
+			}
+		}
+
+		let data;
+		if (params.content.endsWith('}')) {
+			data = JSON.parse(params.content);
+		} else {
+			let apiUri = context.service.socket.uri + anxeb.utils.url.normalize(params.content);
+			data = await _context.socket.do.get({
+				uri     : apiUri,
+				json    : true,
+				headers : {
+					Authorization : 'Bearer ' + (params.token || _context.bearer.token)
+				}
+			});
+		}
 
 		let name = data[params.key_field || 'id'];
 		let fileGroup = params.group || 'misc';
@@ -274,19 +333,13 @@ module.exports = function (context, params) {
 			}
 		}
 
-		let html = await _context.service.renderer.compile(templatePath, { data : data }, {
+		const html = await _context.service.renderer.compile(compilerParams, { data : data }, {
 			helpers : helpers
 		});
 
-		let browser;
-		try {
-			browser = await puppeteer.launch({
-				args : ['--no-sandbox', '--disable-setuid-sandbox'],
-			});
-		} catch (err) {
-			_context.log.exception.inner_exception.args(err).throw(_context);
-			return null;
-		}
+		const browser = await puppeteer.launch({
+			args : ['--no-sandbox', '--disable-setuid-sandbox'],
+		});
 
 		let page = await browser.newPage();
 
