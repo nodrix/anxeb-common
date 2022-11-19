@@ -24,6 +24,7 @@ anxeb.vue.include.helper('api', function () {
 		if (token) {
 			request.headers['Authorization'] = 'Bearer ' + token;
 		}
+		request.headers['accept-language'] = anxeb.vue.root.app.language;
 		return request;
 	}, function (err) {
 		anxeb.vue.root.page.idle();
